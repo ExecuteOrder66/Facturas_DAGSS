@@ -7,6 +7,7 @@ package es.uvigo.esei.dagss.facturaaas.daos;
 
 import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
 import es.uvigo.esei.dagss.facturaaas.entidades.LineaDeFactura;
+import es.uvigo.esei.dagss.facturaaas.entidades.Pago;
 import es.uvigo.esei.dagss.facturaaas.entidades.Usuario;
 import java.util.List;
 import javax.persistence.TypedQuery;
@@ -15,18 +16,20 @@ import javax.persistence.TypedQuery;
  *
  * @author danid
  */
-public class LineaDeFacturaDAOJPA extends GenericoDAOJPA<LineaDeFactura, Long> implements LineaDeFacturaDAO{
-    
+public class PagoDAOJPA extends GenericoDAOJPA<Pago, Long> implements PagoDAO{
+
     @Override
-    public LineaDeFactura buscarConPropietarioYFactura(Usuario propietario, Factura fact) {
-       TypedQuery<LineaDeFactura> query = em.createQuery("SELECT lin FROM LineaDeFactura AS lin WHERE lin.cliente.id = :idPropietario AND lin.factura.id = :idFact ", LineaDeFactura.class);
+    public Pago buscarConPropietario(Usuario propietario) {
+        TypedQuery<Pago> query = em.createQuery("SELECT pag FROM Pago AS pag WHERE pag.cliente.id = :idPropietario", Pago.class);
         query.setParameter("idPropietario", propietario.getId());
-        query.setParameter("idFact", fact.getId());
-        List<LineaDeFactura> resultado = query.getResultList();
+        List<Pago> resultado = query.getResultList();
         if ((resultado != null) && !resultado.isEmpty()) {
             return resultado.get(0);
         } else {
             return null;
         }
     }
+    
+    
+    
 }

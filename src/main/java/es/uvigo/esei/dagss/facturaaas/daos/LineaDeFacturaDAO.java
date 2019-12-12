@@ -5,10 +5,13 @@
  */
 package es.uvigo.esei.dagss.facturaaas.daos;
 
+import es.uvigo.esei.dagss.facturaaas.entidades.FormaPago;
+
 /**
  *
  * @author danid
  */
-public class LineaDeFacturaDAO {
+public interface LineaDeFacturaDAO extends GenericoDAO<FormaPago, Long>{
+    
     
 }
