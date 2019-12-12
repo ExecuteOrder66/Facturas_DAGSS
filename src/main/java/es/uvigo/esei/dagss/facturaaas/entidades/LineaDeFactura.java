@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -22,19 +23,26 @@ import javax.persistence.Table;
  */
    @Entity
 @Table(name = "LINEAFACTURA")
-public class LineaDeFactura {
+public class LineaDeFactura{
+           
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @ManyToOne
+    @JoinColumn(name = "FACTURA_ID")
     private Factura factura;
-    private int numLinea;
     
     private String concepto;
-    private double cantidad;
-    private double precioUnitario;
-    private double porcentajeDescuento;
-    private TipoIVA tipoIva;
-    private double total;
+    private Double cantidad;
+    private Double precioUnitario;
+    private Double porcentajeDescuento;
     
+    @ManyToOne
+    @JoinColumn(name = "TIPO_IVA")
+    private TipoIVA tipoIva;
+    
+    private Double total;
     
     @ManyToOne
     @JoinColumn(name = "CLIENTE_ID")
@@ -48,13 +56,10 @@ public class LineaDeFactura {
         this.factura = factura;
     }
 
-    public int getNumLinea() {
-        return numLinea;
+    public long getId() {
+        return id;
     }
 
-    public void setNumLinea(int numLinea) {
-        this.numLinea = numLinea;
-    }
 
     public String getConcepto() {
         return concepto;
