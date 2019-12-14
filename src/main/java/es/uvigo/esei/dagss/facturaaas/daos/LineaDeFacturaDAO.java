@@ -5,13 +5,15 @@
  */
 package es.uvigo.esei.dagss.facturaaas.daos;
 
+import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
 import es.uvigo.esei.dagss.facturaaas.entidades.FormaPago;
+import es.uvigo.esei.dagss.facturaaas.entidades.LineaDeFactura;
+import es.uvigo.esei.dagss.facturaaas.entidades.Usuario;
 
 /**
  *
  * @author danid
  */
-public interface LineaDeFacturaDAO extends GenericoDAO<FormaPago, Long>{
-    
-    
+public interface LineaDeFacturaDAO extends GenericoDAO<LineaDeFactura, Long>{
+    public LineaDeFactura buscarConPropietarioYFactura(Usuario propietario, Factura factura);   
 }

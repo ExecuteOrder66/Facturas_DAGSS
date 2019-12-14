@@ -29,6 +29,11 @@ public class Factura implements Serializable{
     @JoinColumn(name = "CLIENTE_ID")
     private Cliente cliente;
     
+    @ManyToOne
+    @JoinColumn(name = "USUARIO_ID")
+    private Usuario propietario;
+    
+    
     private double importe;
     private double ivaPagado;
     private double sumaTotal;

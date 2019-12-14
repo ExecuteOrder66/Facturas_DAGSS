@@ -20,7 +20,7 @@ public class PagoDAOJPA extends GenericoDAOJPA<Pago, Long> implements PagoDAO{
 
     @Override
     public Pago buscarConPropietario(Usuario propietario) {
-        TypedQuery<Pago> query = em.createQuery("SELECT pag FROM Pago AS pag WHERE pag.cliente.id = :idPropietario", Pago.class);
+        TypedQuery<Pago> query = em.createQuery("SELECT pag FROM Pago AS pag WHERE pag.usuario.id = :idPropietario", Pago.class);
         query.setParameter("idPropietario", propietario.getId());
         List<Pago> resultado = query.getResultList();
         if ((resultado != null) && !resultado.isEmpty()) {
