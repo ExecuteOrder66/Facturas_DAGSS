@@ -74,6 +74,39 @@ public class Factura implements Serializable{
         return sumaTotal;
     }
 
+    public Usuario getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(Usuario propietario) {
+        this.propietario = propietario;
+    }
+
+    public Date getFechaEmision() {
+        return fechaEmision;
+    }
+
+    public void setFechaEmision(Date fechaEmision) {
+        this.fechaEmision = fechaEmision;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
+    }
+
+
+    public List<LineaDeFactura> getLineasDeFactura() {
+        return lineasDeFactura;
+    }
+
+    public void setLineasDeFactura(List<LineaDeFactura> lineasDeFactura) {
+        this.lineasDeFactura = lineasDeFactura;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
