@@ -6,6 +6,8 @@
 package es.uvigo.esei.dagss.facturaaas.controladores.usuario;
 
 import es.uvigo.esei.dagss.facturaaas.controladores.AutenticacionController;
+import es.uvigo.esei.dagss.facturaaas.daos.FacturaDAO;
+import es.uvigo.esei.dagss.facturaaas.entidades.Cliente;
 import es.uvigo.esei.dagss.facturaaas.entidades.Direccion;
 import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
 import java.util.List;
@@ -40,11 +42,11 @@ public class FacturasController {
     }
 
     public Factura getFacturaActual() {
-        return clienteActual;
+        return facturaActual;
     }
 
-    public void setClienteActual(Cliente clienteActual) {
-        this.clienteActual = clienteActual;
+    public void setClienteActual(Factura facturaActual) {
+        this.facturaActual = facturaActual;
     }
 
     public boolean isEsNuevo() {
@@ -67,55 +69,56 @@ public class FacturasController {
 
     @PostConstruct
     public void cargaInicial() {
-        this.clientes = refrescarLista();
-        this.clienteActual = null;
+        this.facturas = refrescarLista();
+        this.facturaActual = null;
         this.esNuevo = false;
     }
 
     
-    public void doBuscarPorNombre() {
-        this.clientes = dao.buscarPorNombreConPropietario(autenticacionController.getUsuarioLogueado(), textoBusqueda);
+    public void doBuscarConPropietario() {
+        this.facturas = dao.buscarConPropietario(autenticacionController.getUsuarioLogueado());
     }
 
-    public void doBuscarPorLocalidad() {
-        this.clientes = dao.buscarPorLocalidadConPropietario(autenticacionController.getUsuarioLogueado(), textoBusqueda);
+    public void doBuscarConPropietarioPorCliente(Cliente c) {
+        this.facturas = dao.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), c);
     }
     
     public void doBuscarTodos() {
-        this.clientes = refrescarLista();
+        this.facturas = refrescarLista();
     }
     
-    
+    //Que debe hacer esta funcion?
     public void doNuevo() {
         this.esNuevo = true;
-        this.clienteActual = new Cliente();
-        this.clienteActual.setPropietario(autenticacionController.getUsuarioLogueado());
-        this.clienteActual.setDireccion(new Direccion("","","",""));
+        this.facturaActual = new Factura();
+        this.facturaActual.setPropietario(autenticacionController.getUsuarioLogueado());
+        this.facturaActual.setComentarios(textoBusqueda);   //ni idea
+        //TO DO
     }
 
-    public void doEditar(Cliente cliente) {
+    public void doEditar(Factura factura) {
         this.esNuevo = false;
-        this.clienteActual = cliente;
+        this.facturaActual = factura;
     }
 
 
     public void doGuardarEditado() {
         if (this.esNuevo) {
-            dao.crear(clienteActual);
+            dao.crear(facturaActual);
         } else {
-            dao.actualizar(clienteActual);
+            dao.actualizar(facturaActual);
         }
-        this.clientes = refrescarLista();
-        this.clienteActual = null;
+        this.facturas = refrescarLista();
+        this.facturaActual = null;
         this.esNuevo = false;
     }
 
     public void doCancelarEditado() {
-        this.clienteActual = null;
+        this.facturaActual = null;
         this.esNuevo = false;
     }
 
-    private List<Cliente> refrescarLista() {
-        return dao.buscarTodosConPropietario(autenticacionController.getUsuarioLogueado());
+    private List<Factura> refrescarLista() {
+        return dao.buscarConPropietario(autenticacionController.getUsuarioLogueado());
     }
 }
