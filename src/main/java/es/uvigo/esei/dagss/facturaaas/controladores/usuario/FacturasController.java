@@ -6,10 +6,13 @@
 package es.uvigo.esei.dagss.facturaaas.controladores.usuario;
 
 import es.uvigo.esei.dagss.facturaaas.controladores.AutenticacionController;
+import es.uvigo.esei.dagss.facturaaas.daos.DatosFacturacionDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.FacturaDAO;
 import es.uvigo.esei.dagss.facturaaas.entidades.Cliente;
 import es.uvigo.esei.dagss.facturaaas.entidades.Direccion;
 import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
+import es.uvigo.esei.dagss.facturaaas.entidades.LineaDeFactura;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -27,17 +30,20 @@ public class FacturasController {
 
    
     @Inject
-    private FacturaDAO dao;
+    private FacturaDAO facturaDAO;
 
     @Inject
     private AutenticacionController autenticacionController;
 
+    //Ver si acceder a PerfilControlle o a DatosFacturacionDAO
+    @Inject
+    private DatosFacturacionDAO datosFacturacionDAO;  //Para acceder al tipoIVA por defecto del usuario
         
     public List<Factura> getFacturas() {
         return facturas;
     }
 
-    public void setClientes(List<Factura> facturas) {
+    public void setFacturas(List<Factura> facturas) {
         this.facturas = facturas;
     }
 
@@ -45,7 +51,7 @@ public class FacturasController {
         return facturaActual;
     }
 
-    public void setClienteActual(Factura facturaActual) {
+    public void setFacturaActual(Factura facturaActual) {
         this.facturaActual = facturaActual;
     }
 
@@ -64,8 +70,7 @@ public class FacturasController {
     public void setTextoBusqueda(String textoBusqueda) {
         this.textoBusqueda = textoBusqueda;
     }
-    
-    
+   
 
     @PostConstruct
     public void cargaInicial() {
@@ -76,24 +81,30 @@ public class FacturasController {
 
     
     public void doBuscarConPropietario() {
-        this.facturas = dao.buscarConPropietario(autenticacionController.getUsuarioLogueado());
+        //this.facturas = dao.buscarConPropietario(autenticacionController.getUsuarioLogueado());
+        this.facturas = refrescarLista();
     }
-
+    
     public void doBuscarConPropietarioPorCliente(Cliente c) {
-        this.facturas = dao.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), c);
+        this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), c);
     }
     
     public void doBuscarTodos() {
         this.facturas = refrescarLista();
     }
     
-    //Que debe hacer esta funcion?
+    //La forma de pago debe estar inicializada con la forma de pago por defecto del usuario actual
     public void doNuevo() {
         this.esNuevo = true;
         this.facturaActual = new Factura();
         this.facturaActual.setPropietario(autenticacionController.getUsuarioLogueado());
+        //Forma de pago por defecto del usuario extraido de sus datos de facturacion
+        this.facturaActual.setFormaPago(
+                datosFacturacionDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado()).getFormaPagoPorDefecto());
+        
         this.facturaActual.setComentarios(textoBusqueda);   //ni idea
-        //TO DO
+        this.facturaActual.setLineasDeFactura(new ArrayList<LineaDeFactura>()); //puse ArrayList por poner una implementacion de List con la que inicializar
+        
     }
 
     public void doEditar(Factura factura) {
@@ -104,9 +115,9 @@ public class FacturasController {
 
     public void doGuardarEditado() {
         if (this.esNuevo) {
-            dao.crear(facturaActual);
+            facturaDAO.crear(facturaActual);
         } else {
-            dao.actualizar(facturaActual);
+            facturaDAO.actualizar(facturaActual);
         }
         this.facturas = refrescarLista();
         this.facturaActual = null;
@@ -119,6 +130,6 @@ public class FacturasController {
     }
 
     private List<Factura> refrescarLista() {
-        return dao.buscarConPropietario(autenticacionController.getUsuarioLogueado());
+        return facturaDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado());
     }
 }

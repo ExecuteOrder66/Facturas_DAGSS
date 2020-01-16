@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "FACTURA")
@@ -38,10 +40,14 @@ public class Factura implements Serializable{
     @JoinColumn(name = "USUARIO_ID")
     private Usuario propietario;
     
-    
-    private double importe;
-    private double ivaPagado;
-    private double sumaTotal;
+    //No estoy seguro de la cardinalidad
+    @OneToMany
+    @JoinColumn(name = "FORMA_PAGO")
+    private FormaPago formaPago;
+  
+    //private double importe;
+    //private double sumaTotal;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEmision;
     private String comentarios;
     
@@ -62,18 +68,15 @@ public class Factura implements Serializable{
         return cliente;
     }
 
+    /*
     public double getImporte() {
         return importe;
-    }
-
-    public double getIvaPagado() {
-        return ivaPagado;
     }
 
     public double getSumaTotal() {
         return sumaTotal;
     }
-
+    */
     public Usuario getPropietario() {
         return propietario;
     }
@@ -92,6 +95,11 @@ public class Factura implements Serializable{
 
     public String getComentarios() {
         return comentarios;
+    }
+
+    
+    public FormaPago getFormaPago() {
+        return formaPago;
     }
 
     public void setComentarios(String comentarios) {
@@ -118,20 +126,18 @@ public class Factura implements Serializable{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
+    /*
     public void setImporte(double importe) {
         this.importe = importe;
-    }
-
-    private void setIvaPagado(double ivaPagado) {
-        this.ivaPagado = ivaPagado;
     }
 
     public void setSumaTotal(double sumaTotal) {
         this.sumaTotal = sumaTotal;
     }
-
+    */
     
-   
+       public void setFormaPago(FormaPago formaPago) {
+        this.formaPago = formaPago;
+    }
     
 }
