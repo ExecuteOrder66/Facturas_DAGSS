@@ -43,7 +43,7 @@ public class Factura implements Serializable{
     //no se que relacion poner
     private FormaPago formaPago;
   
-    //private double importe;
+    private double importe;
     //private double sumaTotal;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEmision;
@@ -66,11 +66,11 @@ public class Factura implements Serializable{
         return cliente;
     }
 
-    /*
+    
     public double getImporte() {
         return importe;
     }
-
+    /*
     public double getSumaTotal() {
         return sumaTotal;
     }
@@ -124,11 +124,11 @@ public class Factura implements Serializable{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    /*
+    
     public void setImporte(double importe) {
         this.importe = importe;
     }
-
+    /*
     public void setSumaTotal(double sumaTotal) {
         this.sumaTotal = sumaTotal;
     }

@@ -40,14 +40,17 @@
                                  var="factura" 
                                  striped="true" 
                                  page-length="10" searching="false">
+                        <!-- A MOSTRAR idFactura, nombre y nifCliente, estadoFactura, importe, iva, suma total, -->
                         <b:dataTableColumn label="Id">
                             <h:outputText value="#{factura.id}"/>
                         </b:dataTableColumn>
 
+                        <!--    ERROR AL ACCEDER AL NOMBRE DEL CLIENTE
                         <b:dataTableColumn label="Cliente (nombre)">
-                            <h:outputText value="#{factura.cliente.nombre}" />
+                            <h:outputText value="#{factura.cliente.getNombre()}" />
                         </b:dataTableColumn>                    
-
+                        -->
+                        
                         <b:dataTableColumn label="Estado Factura">
                             <h:outputText value="#{factura.estadoFactura}" />
                         </b:dataTableColumn>    
