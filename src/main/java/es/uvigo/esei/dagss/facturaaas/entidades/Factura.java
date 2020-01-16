@@ -41,8 +41,6 @@ public class Factura implements Serializable{
     private Usuario propietario;
     
     //No estoy seguro de la cardinalidad
-    @OneToMany
-    @JoinColumn(name = "FORMA_PAGO")
     private FormaPago formaPago;
   
     //private double importe;
