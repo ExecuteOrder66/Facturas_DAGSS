@@ -40,7 +40,7 @@ public class Factura implements Serializable{
     @JoinColumn(name = "USUARIO_ID")
     private Usuario propietario;
     
-    //No estoy seguro de la cardinalidad
+    //no se que relacion poner
     private FormaPago formaPago;
   
     //private double importe;

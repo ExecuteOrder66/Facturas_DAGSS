@@ -13,43 +13,47 @@
     <ui:define name="tituloPagina">
         <h1>Facturas</h1>
     </ui:define>
-
+    <!-- desplegable con <b:selectOneMenu> -->
     <ui:define name="contenido">
         <h2>
             <h:form id="formularioListado">     
             <b:container fluid="true">
-                <b:panel title="Listado de Clientes" collapsible="false" offset="1" span="9">
+                <b:panel title="Listado de Facturas" collapsible="false" offset="1" span="9">
                     <b:panelGrid columns="4" col-spans="6,2,2,2">
-                        <b:inputText value="#{clientesController.textoBusqueda}" />
-                        <b:commandButton value="Buscar por Nombre"  
-                                         actionListener="#{clientesController.doBuscarPorNombre()}"
-                                         update=":formularioListado:tablaListado :mensajesGlobal"/>
-                        <b:commandButton value="Buscar por Localidad"  
-                                         actionListener="#{clientesController.doBuscarPorLocalidad()}"
+                       <!-- <b:inputText value="<#//{clientesController.clienteBusqueda}" /> -->
+                        <b:selectOneMenu id="clienteListaBusqueda">
+                            <f:converter converterId="omnifaces.GenericEnumConverter" />
+                            <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
+                            <f:selectItems value="#{clientesController.clientes}"/> 
+                        </b:selectOneMenu>
+                        <b:commandButton value="Buscar por Cliente"  
+                                         actionListener="#{facturasController.doBuscarConPropietarioPorCliente()}"
                                          update=":formularioListado:tablaListado :mensajesGlobal"/>
                         <b:commandButton value="Buscar Todos"  
-                                         actionListener="#{clientesController.doBuscarTodos()}"
+                                         actionListener="#{facturasController.doBuscarTodos()}"
                                          update=":formularioListado:tablaListado :mensajesGlobal"/>
                     </b:panelGrid>
 
 
                     <b:dataTable id="tablaListado"  class="tablaListadoClass"
-                                 value="#{clientesController.clientes}"
-                                 var="cliente" 
+                                 value="#{facturaController.facturas}"
+                                 var="factura" 
                                  striped="true" 
                                  page-length="10" searching="false">
                         <b:dataTableColumn label="Id">
-                            <h:outputText value="#{cliente.id}"/>
+                            <h:outputText value="#{factura.id}"/>
                         </b:dataTableColumn>
 
-                        <b:dataTableColumn label="Nombre">
-                            <h:outputText value="#{cliente.nombre}" />
+                        <b:dataTableColumn label="Cliente (nombre)">
+                            <h:outputText value="#{factura.cliente.nombre}" />
                         </b:dataTableColumn>                    
 
-                        <b:dataTableColumn label="NIF">
-                            <h:outputText value="#{cliente.nif}" />
-                        </b:dataTableColumn>                  
-
+                        <b:dataTableColumn label="Estado Factura">
+                            <h:outputText value="#{factura.estadoFactura}" />
+                        </b:dataTableColumn>    
+                        
+                        
+                        <!--Modificado hasta aqui-->
                         <b:dataTableColumn label="Dirección">
                             <h:outputText value="#{cliente.direccion.domicilio}, #{cliente.direccion.localidad} (#{cliente.direccion.provincia})" />
                         </b:dataTableColumn>                    

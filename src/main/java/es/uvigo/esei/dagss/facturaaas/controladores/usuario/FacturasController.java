@@ -26,7 +26,7 @@ public class FacturasController {
     private List<Factura> facturas;
     private Factura facturaActual;
     private boolean esNuevo;
-    private String textoBusqueda;
+    private Cliente clienteBusqueda;
 
    
     @Inject
@@ -63,15 +63,6 @@ public class FacturasController {
         this.esNuevo = esNuevo;
     }
 
-    public String getTextoBusqueda() {
-        return textoBusqueda;
-    }
-
-    public void setTextoBusqueda(String textoBusqueda) {
-        this.textoBusqueda = textoBusqueda;
-    }
-   
-
     @PostConstruct
     public void cargaInicial() {
         this.facturas = refrescarLista();
@@ -85,8 +76,8 @@ public class FacturasController {
         this.facturas = refrescarLista();
     }
     
-    public void doBuscarConPropietarioPorCliente(Cliente c) {
-        this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), c);
+    public void doBuscarConPropietarioPorCliente() {
+        this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), clienteBusqueda);
     }
     
     public void doBuscarTodos() {
@@ -101,8 +92,7 @@ public class FacturasController {
         //Forma de pago por defecto del usuario extraido de sus datos de facturacion
         this.facturaActual.setFormaPago(
                 datosFacturacionDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado()).getFormaPagoPorDefecto());
-        
-        this.facturaActual.setComentarios(textoBusqueda);   //ni idea
+
         this.facturaActual.setLineasDeFactura(new ArrayList<LineaDeFactura>()); //puse ArrayList por poner una implementacion de List con la que inicializar
         
     }
