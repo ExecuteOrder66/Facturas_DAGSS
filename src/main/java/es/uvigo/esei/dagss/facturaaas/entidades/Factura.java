@@ -29,6 +29,7 @@ public class Factura implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    //Falta el ejercicio (o año contable)
     @Enumerated(EnumType.STRING)
     private EstadoFactura estadoFactura;
     

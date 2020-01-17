@@ -5,12 +5,59 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition>
+        <h:form id="formularioEditarFactura">
+            <b:modal id="modalEditarFactura" class="modal-editar-class" title="Crear/Editar Cliente">
+                <b:container fluid="true">
+                    <b:panel title="Crear/Editar Factura" 
+                             rendered="#{not empty facturasController.facturaActual}" 
+                             collapsible="false">
+                        <b:panelGrid columns="2" col-spans="4,8">
+                            <h:outputLabel value="Id" for="idFactura"/>                                    <!-- readonly pillado de stackoverflow, ver si funciona -->
+                            <b:inputText id="idFactura" value="#{facturasController.facturaActual.id}" required="true" readonly="#{facesContext.renderResponse}"/>
+                            
+                            <h:outputLabel value="Ejercicio" for="ejercicio"/>
+                            <b:inputText id="ejercicio" value=""/>
+                            
+                            <h:outputLabel value="Cliente" for="clienteFactura"/>  
+                            <b:inputText id="clienteFactura" value="{facturasController.facturaActual.cliente.nombre}"/>
+                            <b:selectOneMenu id="clienteFactura" value="facturasController.facturaActual.cliente.nombre"
+                                             converter="omnifaces.SelectItemsConverter">
+                                <f:selectItems var="clienteFactura" value="#{facturaController.listadoClientes()}"
+                                               itemValue="#{clienteFactura}" itemLabel="#{clienteFactura.nombre} (#{clienteFactura.nif})"/>
+                            </b:selectOneMenu>
+                            
+                            <!-- no estoy seguro de que funcione el datepicker -->
+                            <h:outputLabel value="Fecha emision" for="fechaEmision"/>
+                            <b:dateTimePicker id="datePicker" format="DD/MM/YYYY HH:mm" ajax="true" value="#{facturasController.facturaActual.fechaEmision}">    
+                            </b:dateTimePicker>
+                                              
+                            
+                            <h:outputLabel value="Forma de Pago" for="formaPago"/>
+                            <b:selectOneMenu id="formaPago" value="facturasController.facturaActual.formaPago.nombre"
+                                             converter="omnifaces.SelectItemsConverter">
+                                <f:selectItems var="formaPagoFactura" value="#{facturaController.listadoFormaPago()}"
+                                               itemValue="#{formaPagoFactura}" itemLabel="#{formaPagoFactura.nombre} (#{formaPagoFactura.periodicidad})"/>
+                            </b:selectOneMenu>
+                            
+                            <h:outputLabel value="Estado" for="estadoFactura"/> <!--no estoy muy seguro de este desplegable-->
+                            <b:selectOneMenu id="estadoFactura" value="#{facturasController.facturaActual.estadoFactura}" ajax="true" >
+                                        <f:converter converterId="omnifaces.GenericEnumConverter" />
+                                        <f:selectItems value="#{facturasController.estadosFactura}"/>
+                            </b:selectOneMenu>
+                            
+                            <h:outputLabel value="Id" for="comentarios"/>                                    
+                            <b:inputText id="comentarios" value="#{facturasController.facturaActual.comentarios}" />    
+                        </b:panelGrid>    
+                    </b:panel>    
+                </b:container>
+            </b:modal>
+        </h:form>
+    </ui:composition>
+        
 </html>

@@ -6,11 +6,15 @@
 package es.uvigo.esei.dagss.facturaaas.controladores.usuario;
 
 import es.uvigo.esei.dagss.facturaaas.controladores.AutenticacionController;
+import es.uvigo.esei.dagss.facturaaas.daos.ClienteDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.DatosFacturacionDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.FacturaDAO;
+import es.uvigo.esei.dagss.facturaaas.daos.FormaPagoDAO;
 import es.uvigo.esei.dagss.facturaaas.entidades.Cliente;
 import es.uvigo.esei.dagss.facturaaas.entidades.Direccion;
+import es.uvigo.esei.dagss.facturaaas.entidades.EstadoFactura;
 import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
+import es.uvigo.esei.dagss.facturaaas.entidades.FormaPago;
 import es.uvigo.esei.dagss.facturaaas.entidades.LineaDeFactura;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +32,17 @@ public class FacturasController {
     private boolean esNuevo;
     private Cliente clienteBusqueda;
 
+    private EstadoFactura[] estadosFactura = EstadoFactura.values();
    
     @Inject
     private FacturaDAO facturaDAO;
 
+    @Inject
+    private ClienteDAO clienteDAO;
+    
+    @Inject
+    private FormaPagoDAO formaPagoDAO;
+    
     @Inject
     private AutenticacionController autenticacionController;
 
@@ -55,6 +66,10 @@ public class FacturasController {
         this.facturaActual = facturaActual;
     }
 
+    public EstadoFactura[] getEstadosFactura() {
+        return estadosFactura;
+    }
+    
     public boolean isEsNuevo() {
         return esNuevo;
     }
@@ -122,4 +137,14 @@ public class FacturasController {
     private List<Factura> refrescarLista() {
         return facturaDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado());
     }
+    
+    
+    public List<Cliente> listadoClientes(){
+        return clienteDAO.buscarTodosConPropietario(autenticacionController.getUsuarioLogueado());
+    }
+    
+    public List<FormaPago> listadoFormaPago(){
+        return formaPagoDAO.buscarActivas();
+    }
+
 }

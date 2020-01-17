@@ -21,10 +21,10 @@
                 <b:panel title="Listado de Facturas" collapsible="false" offset="1" span="9">
                     <b:panelGrid columns="4" col-spans="6,2,2,2">
                        <!-- <b:inputText value="<#//{clientesController.clienteBusqueda}" /> -->
-                        <b:selectOneMenu id="clienteListaBusqueda">
-                            <f:converter converterId="omnifaces.GenericEnumConverter" />
+                        <b:selectOneMenu id="clienteListaBusqueda" converter="omnifaces.SelectItemsConverter"> 
                             <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
-                            <f:selectItems value="#{clientesController.clientes}"/> 
+                            <f:selectItems var="clienteFactura" value="#{facturaController.listadoClientes()}" itemValue="#{clienteFactura}" 
+                                    itemLabel="#{clienteFactura.nombre} (#{clienteFactura.nif})"/> 
                         </b:selectOneMenu>
                         <b:commandButton value="Buscar por Cliente"  
                                          actionListener="#{facturasController.doBuscarConPropietarioPorCliente()}"
@@ -45,36 +45,34 @@
                             <h:outputText value="#{factura.id}"/>
                         </b:dataTableColumn>
 
-                        <!--    ERROR AL ACCEDER AL NOMBRE DEL CLIENTE
+          
                         <b:dataTableColumn label="Cliente (nombre)">
-                            <h:outputText value="#//{factura.cliente.getNombre()}" />
+                            <h:outputText value="#{factura.cliente.getNombre()}" />
                         </b:dataTableColumn>                    
-                        -->
+                        
                         
                         <b:dataTableColumn label="Estado Factura">
                             <h:outputText value="#{factura.estadoFactura}" />
                         </b:dataTableColumn>    
-                        
-                        
+                                                
                         
                         <b:dataTableColumn label="Forma de Pago">
                             <h:outputText value="#{factura.formaPago.nombre}, #{factura.formaPago.periodicidad} (#{factura.formaPago.numeroPagos})" />
                         </b:dataTableColumn>                    
-                           <!--Modificado hasta aqui-->
 
 
                         <b:dataTableColumn label="" orderable="false">
-                            <b:commandButton id="botonEditar" icon-awesome="pencil" tooltip="Editar Cliente" ajax="true" 
+                            <b:commandButton id="botonEditar" icon-awesome="pencil" tooltip="Editar Factura" ajax="true" 
                                              actionListener="#{facturasController.doEditar(factura)}" 
-                                             update=":formularioEditar"
+                                             update=":formularioEditarFactura"
                                              oncomplete="$('.modal-editar-class').modal('show')"/>                                                                                                                    
                         </b:dataTableColumn>                            
                     </b:dataTable>
 
                     <f:facet name="footer">
-                        <b:commandButton id="botonNuevo" icon-awesome="plus" value="Crear Cliente" tooltip="Nuevo Cliente" ajax="true"
+                        <b:commandButton id="botonNuevo" icon-awesome="plus" value="Crear Cliente" tooltip="Nueva Factura" ajax="true"
                                          actionListener="#{facturasController.doNuevo()}" 
-                                         update=":formularioEditar"
+                                         update=":formularioEditarFactura"
                                          oncomplete="$('.modal-editar-class').modal('show')"/>
                     </f:facet>
                 </b:panel>
