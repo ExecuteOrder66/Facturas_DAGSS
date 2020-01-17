@@ -50,12 +50,16 @@ public class Factura implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEmision;
     private String comentarios;
+    private String ejercicio;
     
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "factura")
     private List<LineaDeFactura> lineasDeFactura;
 
             
+    
+    //GETTERS
+    
     public Long getId() {
         return id;
     }
@@ -67,6 +71,7 @@ public class Factura implements Serializable{
     public Cliente getCliente() {
         return cliente;
     }
+    
 
     
     public double getImporte() {
@@ -88,6 +93,13 @@ public class Factura implements Serializable{
     public Date getFechaEmision() {
         return fechaEmision;
     }
+
+    public String getEjercicio() {
+        return ejercicio;
+    }
+    
+    
+    //SETTERS
 
     public void setFechaEmision(Date fechaEmision) {
         this.fechaEmision = fechaEmision;
@@ -115,10 +127,6 @@ public class Factura implements Serializable{
         this.lineasDeFactura = lineasDeFactura;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setEstadoFactura(EstadoFactura estadoFactura) {
         this.estadoFactura = estadoFactura;
     }
@@ -139,5 +147,11 @@ public class Factura implements Serializable{
        public void setFormaPago(FormaPago formaPago) {
         this.formaPago = formaPago;
     }
+
+    public void setEjercicio(String ejercicio) {
+        this.ejercicio = ejercicio;
+    }
+       
+     
     
 }
