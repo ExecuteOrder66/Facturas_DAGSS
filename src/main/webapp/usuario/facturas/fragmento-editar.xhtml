@@ -53,7 +53,16 @@ and open the template in the editor.
                             
                             <h:outputLabel value="Id" for="comentarios"/>                                    
                             <b:inputText id="comentarios" value="#{facturasController.facturaActual.comentarios}" />    
-                        </b:panelGrid>    
+                        </b:panelGrid> 
+                        <b:commandButton value="Guardar Cambios" 
+                                         ajax="true" process="@form" update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal " 
+                                         actionListener="#{clientesController.doGuardarEditado()}"  
+                                         oncomplete="$('.modal-editar-class').modal('hide')"/>
+
+                        <b:commandButton value="Cancelar" immediate="true"
+                                         ajax="true" process="@form" update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal " 
+                                         actionListener="#{clientesController.doCancelarEditado()}" 
+                                         oncomplete="$('.modal-editar-class').modal('hide')" />
                     </b:panel>    
                 </b:container>
             </b:modal>

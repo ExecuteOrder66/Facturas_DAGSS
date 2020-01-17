@@ -16,7 +16,7 @@
     <!-- desplegable con <b:selectOneMenu> -->
     <ui:define name="contenido">
         <h2>
-            <h:form id="formularioListado">     
+            <h:form id="formularioListadoFactura">     
             <b:container fluid="true">
                 <b:panel title="Listado de Facturas" collapsible="false" offset="1" span="9">
                     <b:panelGrid columns="4" col-spans="6,2,2,2">
@@ -35,7 +35,7 @@
                     </b:panelGrid>
 
 
-                    <b:dataTable id="tablaListado"  class="tablaListadoClass"
+                    <b:dataTable id="tablaListadoFactura"  class="tablaListadoClass"
                                  value="#{facturaController.facturas}"
                                  var="factura" 
                                  striped="true" 
