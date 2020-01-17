@@ -47,7 +47,7 @@
 
                         <!--    ERROR AL ACCEDER AL NOMBRE DEL CLIENTE
                         <b:dataTableColumn label="Cliente (nombre)">
-                            <h:outputText value="#{factura.cliente.getNombre()}" />
+                            <h:outputText value="#//{factura.cliente.getNombre()}" />
                         </b:dataTableColumn>                    
                         -->
                         
@@ -56,23 +56,16 @@
                         </b:dataTableColumn>    
                         
                         
-                        <!--Modificado hasta aqui-->
-                        <b:dataTableColumn label="Dirección">
-                            <h:outputText value="#{cliente.direccion.domicilio}, #{cliente.direccion.localidad} (#{cliente.direccion.provincia})" />
+                        
+                        <b:dataTableColumn label="Forma de Pago">
+                            <h:outputText value="#{factura.formaPago.nombre}, #{factura.formaPago.periodicidad} (#{factura.formaPago.numeroPagos})" />
                         </b:dataTableColumn>                    
-
-                        <b:dataTableColumn label="Teléfono" >
-                            <h:outputText value="#{cliente.telefono}" />
-                        </b:dataTableColumn>
-
-                        <b:dataTableColumn label="e-mail" >
-                            <h:outputText value="#{cliente.email}" />
-                        </b:dataTableColumn>
+                           <!--Modificado hasta aqui-->
 
 
                         <b:dataTableColumn label="" orderable="false">
                             <b:commandButton id="botonEditar" icon-awesome="pencil" tooltip="Editar Cliente" ajax="true" 
-                                             actionListener="#{clientesController.doEditar(cliente)}" 
+                                             actionListener="#{facturasController.doEditar(factura)}" 
                                              update=":formularioEditar"
                                              oncomplete="$('.modal-editar-class').modal('show')"/>                                                                                                                    
                         </b:dataTableColumn>                            
@@ -80,7 +73,7 @@
 
                     <f:facet name="footer">
                         <b:commandButton id="botonNuevo" icon-awesome="plus" value="Crear Cliente" tooltip="Nuevo Cliente" ajax="true"
-                                         actionListener="#{clientesController.doNuevo()}" 
+                                         actionListener="#{facturasController.doNuevo()}" 
                                          update=":formularioEditar"
                                          oncomplete="$('.modal-editar-class').modal('show')"/>
                     </f:facet>

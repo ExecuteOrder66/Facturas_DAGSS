@@ -41,6 +41,7 @@ public class Factura implements Serializable{
     private Usuario propietario;
     
     //no se que relacion poner
+    @ManyToOne
     private FormaPago formaPago;
   
     private double importe;
