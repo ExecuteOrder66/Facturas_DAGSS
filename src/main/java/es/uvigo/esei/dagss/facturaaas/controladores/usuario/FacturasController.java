@@ -19,12 +19,16 @@ import es.uvigo.esei.dagss.facturaaas.entidades.LineaDeFactura;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author danid
  */
+@Named(value = "facturasController")
+@ViewScoped
 public class FacturasController {
     
     private List<Factura> facturas;
