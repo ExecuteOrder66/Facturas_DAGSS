@@ -105,10 +105,6 @@ public class LineaDeFactura{
         return total;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
     public Cliente getCliente() {
         return cliente;
     }
