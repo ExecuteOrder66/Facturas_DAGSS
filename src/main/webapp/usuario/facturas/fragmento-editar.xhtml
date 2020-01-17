@@ -25,7 +25,6 @@ and open the template in the editor.
                             <b:inputText id="ejercicio" value=""/>
                             
                             <h:outputLabel value="Cliente" for="clienteFactura"/>  
-                            <b:inputText id="clienteFactura" value="{facturasController.facturaActual.cliente.nombre}"/>
                             <b:selectOneMenu id="clienteFactura" value="facturasController.facturaActual.cliente.nombre"
                                              converter="omnifaces.SelectItemsConverter">
                                 <f:selectItems var="clienteFactura" value="#{facturaController.listadoClientes()}"
