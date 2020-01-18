@@ -29,7 +29,6 @@ public class Factura implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    //Falta el ejercicio (o año contable)
     @Enumerated(EnumType.STRING)
     private EstadoFactura estadoFactura;
     
@@ -99,12 +98,6 @@ public class Factura implements Serializable{
     }
     
     
-    //SETTERS
-
-    public void setFechaEmision(Date fechaEmision) {
-        this.fechaEmision = fechaEmision;
-    }
-
     public String getComentarios() {
         return comentarios;
     }
@@ -113,6 +106,13 @@ public class Factura implements Serializable{
     public FormaPago getFormaPago() {
         return formaPago;
     }
+    
+    //SETTERS
+
+    public void setFechaEmision(Date fechaEmision) {
+        this.fechaEmision = fechaEmision;
+    }
+
 
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
