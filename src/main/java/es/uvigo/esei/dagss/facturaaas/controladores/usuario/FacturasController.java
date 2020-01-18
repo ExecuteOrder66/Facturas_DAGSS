@@ -16,6 +16,7 @@ import es.uvigo.esei.dagss.facturaaas.entidades.EstadoFactura;
 import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
 import es.uvigo.esei.dagss.facturaaas.entidades.FormaPago;
 import es.uvigo.esei.dagss.facturaaas.entidades.LineaDeFactura;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -29,7 +30,7 @@ import javax.inject.Named;
  */
 @Named(value = "facturasController")
 @ViewScoped
-public class FacturasController {
+public class FacturasController implements Serializable {
     
     private List<Factura> facturas;
     private Factura facturaActual;
