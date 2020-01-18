@@ -18,40 +18,53 @@ and open the template in the editor.
                              rendered="#{not empty facturasController.facturaActual}" 
                              collapsible="false">
                         <b:panelGrid columns="2" col-spans="4,8">
-                            <h:outputLabel value="Id" for="idFactura"/>                                    <!-- readonly pillado de stackoverflow, ver si funciona -->
-                            <b:inputText id="idFactura" value="#{facturasController.facturaActual.id}" required="true" readonly="#{facesContext.renderResponse}"/>
+                            <h:panelGroup>
+                                <h:outputLabel value="Id" for="idFactura"/>                                    <!-- readonly pillado de stackoverflow, ver si funciona -->
+                                <b:inputText id="idFactura" value="#{facturasController.facturaActual.id}" required="true" readonly="#{facesContext.renderResponse}"/>
+                            </h:panelGroup>
                             
-                            <h:outputLabel value="Ejercicio" for="ejercicio"/>
-                            <b:inputText id="ejercicio" value=""/>
+                            <h:panelGroup>
+                                <h:outputLabel value="Ejercicio" for="ejercicio"/>
+                                <b:inputText id="ejercicio" value=""/>
+                            </h:panelGroup>
                             
-                            <h:outputLabel value="Cliente" for="clienteFactura"/>  
-                            <b:selectOneMenu id="clienteFactura" converter="omnifaces.SelectItemsConverter"> 
-                            <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
-                            <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
-                                           itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
-                            </b:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputLabel value="Cliente" for="clienteFactura"/>  
+                                <b:selectOneMenu id="clienteFactura" converter="omnifaces.SelectItemsConverter"> 
+                                <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
+                                <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
+                                               itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
+                                </b:selectOneMenu>
+                            </h:panelGroup>
                             
                             <!-- no estoy seguro de que funcione el datepicker -->
-                            <h:outputLabel value="Fecha emision" for="fechaEmision"/>
-                            <b:dateTimePicker id="datePicker" format="DD/MM/YYYY HH:mm" ajax="true" value="#{facturasController.facturaActual.fechaEmision}">    
-                            </b:dateTimePicker>
-                                              
+                            <h:panelGroup>
+                                <h:outputLabel value="Fecha emision" for="fechaEmision"/>
+                                <b:dateTimePicker id="datePicker" format="DD/MM/YYYY HH:mm" ajax="true" value="#{facturasController.facturaActual.fechaEmision}">    
+                                </b:dateTimePicker>
+                            </h:panelGroup>           
                             
-                            <h:outputLabel value="Forma de Pago" for="formaPago"/>
-                            <b:selectOneMenu id="formaPago" value="facturasController.facturaActual.formaPago.nombre"
-                                             converter="omnifaces.SelectItemsConverter">
-                                <f:selectItems var="formaPagoFactura" value="#{facturaController.listadoFormaPago()}"
-                                               itemValue="#{formaPagoFactura}" itemLabel="#{formaPagoFactura.nombre} (#{formaPagoFactura.periodicidad})"/>
-                            </b:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputLabel value="Forma de Pago" for="formaPago"/>
+                                <b:selectOneMenu id="formaPago" 
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems var="formaPagoFactura" value="#{facturaController.listadoFormaPago()}" 
+                                                   itemValue="#{formaPagoFactura}" itemLabel="#{formaPagoFactura.nombre}(#{formaPagoFactura.periodicidad})"/>
+                                </b:selectOneMenu>
+                            </h:panelGroup>
                             
-                            <h:outputLabel value="Estado" for="estadoFactura"/> <!--no estoy muy seguro de este desplegable-->
-                            <b:selectOneMenu id="estadoFactura" value="#{facturasController.facturaActual.estadoFactura}" ajax="true" >
-                                        <f:converter converterId="omnifaces.GenericEnumConverter" />
-                                        <f:selectItems value="#{facturasController.estadosFactura}"/>
-                            </b:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputLabel value="Estado" for="estadoFactura"/> <!--no estoy muy seguro de este desplegable-->
+                                <b:selectOneMenu id="estadoFactura" value="#{facturasController.facturaActual.estadoFactura}" ajax="true" >
+                                            <f:converter converterId="omnifaces.GenericEnumConverter" />
+                                            <f:selectItems value="#{facturasController.estadosFactura}"/>
+                                </b:selectOneMenu>
+                            </h:panelGroup>
                             
-                            <h:outputLabel value="Comentarios" for="comentarios"/>                                    
-                            <b:inputText id="comentarios" value="#{facturasController.facturaActual.comentarios}" />    
+                            <h:panelGroup>
+                                <h:outputLabel value="Comentarios" for="comentarios"/>                                    
+                                <b:inputText id="comentarios" value="#{facturasController.facturaActual.comentarios}" />    
+                            </h:panelGroup>
                         </b:panelGrid> 
                         <b:commandButton value="Guardar Cambios" 
                                          ajax="true" process="@form" update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal " 
