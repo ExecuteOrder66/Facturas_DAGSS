@@ -35,6 +35,10 @@ public class FacturasController implements Serializable {
     private List<Factura> facturas;
     private Factura facturaActual;
     private boolean esNuevo;
+    //No estoy seguro ---------------------------------------
+    private boolean esNuevaLinea;   //es lineaDeFactura nueva
+
+   
     private Cliente clienteBusqueda;
 
     private EstadoFactura[] estadosFactura = EstadoFactura.values();
@@ -82,6 +86,15 @@ public class FacturasController implements Serializable {
         this.esNuevo = esNuevo;
     }
 
+    //No estoy seguro ---------------------------------------
+     public boolean isEsNuevaLinea() {
+        return esNuevaLinea;
+    }
+
+    public void setEsNuevaLinea(boolean esNuevaLinea) {
+        this.esNuevaLinea = esNuevaLinea;
+    }
+    
     @PostConstruct
     public void cargaInicial() {
         this.facturas = refrescarLista();
@@ -150,5 +163,10 @@ public class FacturasController implements Serializable {
     public List<FormaPago> listadoFormaPago(){
         return formaPagoDAO.buscarActivas();
     }
-
+    
+    //No estoy seguro ---------------------------------------
+    //Editar una linea de factura
+    public void doEditar(LineaDeFactura linea){
+        
+    }
 }

@@ -12,7 +12,7 @@ and open the template in the editor.
       xmlns:b="http://bootsfaces.net/ui">
     <ui:composition>
         <h:form id="formularioEditarFactura">
-            <b:modal id="modalEditarFactura" class="modal-editar-class" title="Crear/Editar Cliente">
+            <b:modal id="modalEditarFactura" class="modal-editar-class" title="Crear/Editar Factura">
                 <b:container fluid="true">
                     <b:panel title="Crear/Editar Factura" 
                              rendered="#{not empty facturasController.facturaActual}" 
@@ -75,9 +75,45 @@ and open the template in the editor.
                                          ajax="true" process="@form" update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal " 
                                          actionListener="#{clientesController.doCancelarEditado()}" 
                                          oncomplete="$('.modal-editar-class').modal('hide')" />
-                    </b:panel>    
+                    </b:panel>
                 </b:container>
             </b:modal>
+        </h:form>
+        <h:form id="FormularioListadoLineaFactura">
+            <b:container fluid="true">
+                <b:panel title="Listado Lineas de Factura" collapsible="false" offset="1" span="9">
+                    <b:dataTable id="tablaListadoLineaDeFactura"  class="tablaListadoClass"
+                                 value="#{facturaController.facturaActual.lineasDeFactura}"
+                                 var="lineaDeFactura" 
+                                 striped="true" 
+                                 page-length="10" searching="false">
+                        
+                        <b:dataTableColumn label="Id">
+                            <h:outputText value="#{lineaDeFactura.id}"/>
+                        </b:dataTableColumn>
+                        
+                        <b:dataTableColumn label="Concepto">
+                            <h:outputText value="#{lineaDeFactura.concepto}"/>
+                        </b:dataTableColumn>
+                        
+                        <b:dataTableColumn label="Cantidad">
+                            <h:outputText value="#{lineaDeFactura.cantidad}"/>
+                        </b:dataTableColumn>
+                        
+                        <b:dataTableColumn label="Precio unitario">
+                            <h:outputText value="#{lineaDeFactura.precioUnitario}"/>
+                        </b:dataTableColumn>
+                        
+                        <b:dataTableColumn label="Tipo IVA">
+                            <h:outputText value="#{lineaDeFactura.tipoIva.nombre}(#{lineaDeFactura.tipoIva.porcentaje})"/>
+                        </b:dataTableColumn>
+                        
+                        <b:dataTableColumn label="Total">
+                            <h:outputText value="#{lineaDeFactura.total}"/>
+                        </b:dataTableColumn>
+                    </b:dataTable>
+                </b:panel>
+            </b:container>
         </h:form>
     </ui:composition>
         
