@@ -51,7 +51,6 @@ public class FacturasController implements Serializable {
     @Inject
     private AutenticacionController autenticacionController;
 
-    //Ver si acceder a PerfilControlle o a DatosFacturacionDAO
     @Inject
     private DatosFacturacionDAO datosFacturacionDAO;  //Para acceder al tipoIVA por defecto del usuario
         

@@ -23,8 +23,8 @@
                        <!-- <b:inputText value="<#//{clientesController.clienteBusqueda}" /> -->
                         <b:selectOneMenu id="clienteListaBusqueda" converter="omnifaces.SelectItemsConverter"> 
                             <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
-                            <f:selectItems var="clienteFactura" value="#{facturaController.listadoClientes()}" itemValue="#{clienteFactura}" 
-                                    itemLabel="#{clienteFactura.nombre} (#{clienteFactura.nif})"/> 
+                            <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
+                                    itemLabel="(#{clienteFactura.nif})"/> 
                         </b:selectOneMenu>
                         <b:commandButton value="Buscar por Cliente"  
                                          actionListener="#{facturasController.doBuscarConPropietarioPorCliente()}"
