@@ -25,10 +25,10 @@ and open the template in the editor.
                             <b:inputText id="ejercicio" value=""/>
                             
                             <h:outputLabel value="Cliente" for="clienteFactura"/>  
-                            <b:selectOneMenu id="clienteFactura" value="facturasController.facturaActual.cliente.nombre"
-                                             converter="omnifaces.SelectItemsConverter">
-                                <f:selectItems var="clienteFactura" value="#{facturaController.listadoClientes()}"
-                                               itemValue="#{clienteFactura}" itemLabel="#{clienteFactura.nombre} (#{clienteFactura.nif})"/>
+                            <b:selectOneMenu id="clienteFactura" converter="omnifaces.SelectItemsConverter"> 
+                            <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
+                            <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
+                                           itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
                             </b:selectOneMenu>
                             
                             <!-- no estoy seguro de que funcione el datepicker -->
@@ -50,7 +50,7 @@ and open the template in the editor.
                                         <f:selectItems value="#{facturasController.estadosFactura}"/>
                             </b:selectOneMenu>
                             
-                            <h:outputLabel value="Id" for="comentarios"/>                                    
+                            <h:outputLabel value="Comentarios" for="comentarios"/>                                    
                             <b:inputText id="comentarios" value="#{facturasController.facturaActual.comentarios}" />    
                         </b:panelGrid> 
                         <b:commandButton value="Guardar Cambios" 
