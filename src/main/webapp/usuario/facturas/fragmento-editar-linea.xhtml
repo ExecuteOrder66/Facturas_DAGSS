@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition>
+        <b:modal id="modalEditarLinea" class="modal-editarLinea-class" title="Crear/Editar LineadeFactura">
+        <h:form id="formularioEditarLineaFactura">
+            
+                <b:container fluid="true">
+                    <b:panel title="Crear/Editar LineaDeFactura" 
+                             rendered="#{not empty lineasDeFactura.lineaActual}" 
+                             collapsible="false">
+                        <b:panelGrid columns="2" col-spans="4,8">
+                            <h:panelGroup>
+                                <h:outputLabel value="Id" for="idFactura"/>                                    <!-- readonly pillado de stackoverflow, ver si funciona -->
+                                <b:inputText id="idFactura" value="#{facturasController.facturaActual.id}" required="true" readonly="#{facesContext.renderResponse}"/>
+                            </h:panelGroup>
+                              <h:panelGroup>
+                                <h:outputLabel value="Concepto" for="concepto"/>
+                                <b:inputText id="concepto" value=""/>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Cantidad" for="cantidad"/>
+                                <b:inputText id="cantidad" value=""/>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="TipoIva" for="tipoIva"/> <!--no estoy muy seguro de este desplegable-->
+                                <b:selectOneMenu id="tipoIva" value="#{TipoIVAContoller.getTiposIva()}" ajax="true" >
+                                            <f:converter converterId="omnifaces.GenericEnumConverter" />
+                                            <f:selectItems value="#{TiposIVAController.getTiposIva()}"/>
+                                </b:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Precio Unitario" for="precioUnitario"/>
+                                <b:inputText id="precioUnitario" value=""/>
+                            </h:panelGroup>
+                            
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Total" for="total"/>
+                                <b:inputText id="total" value=""/>
+                            </h:panelGroup>
+                            
+         
+                        </b:panelGrid> 
+                            
+                            
+                        <b:commandButton value="Guardar Cambios" 
+                                         ajax="true" process="@form" update=":formularioListadoLineaFactura:tablaListadoLineaDeFactura :mensajesGlobal " 
+                                         actionListener="#{clientesController.doGuardarEditado()}"  
+                                         oncomplete="$('.modal-editarLinea-class').modal('hide')"/>
+
+                        <b:commandButton value="Cancelar" immediate="true"
+                                         ajax="true" process="@form" update=":formularioListadoLineaFactura:tablaListadoLineaDeFactura :mensajesGlobal " 
+                                         actionListener="#{clientesController.doCancelarEditado()}" 
+                                         oncomplete="$('.modal-editarLinea-class').modal('hide')" />
+                    </b:panel>
+                </b:container>
+
+        </h:form>
+       
+        </b:modal>
+    </ui:composition>
+        
+</html>
