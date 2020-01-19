@@ -108,8 +108,8 @@ public class FacturasController implements Serializable {
         this.facturas = refrescarLista();
     }
     
-    public void doBuscarConPropietarioPorCliente() {
-        this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), clienteBusqueda);
+    public void doBuscarConPropietarioPorCliente(Cliente cli) {
+        this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), cli);
     }
     
     public void doBuscarTodos() {

@@ -11,8 +11,9 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
     <ui:composition>
+        <b:modal id="modalEditarFactura" class="modal-editar-class" title="Crear/Editar Factura">
         <h:form id="formularioEditarFactura">
-            <b:modal id="modalEditarFactura" class="modal-editar-class" title="Crear/Editar Factura">
+            
                 <b:container fluid="true">
                     <b:panel title="Crear/Editar Factura" 
                              rendered="#{not empty facturasController.facturaActual}" 
@@ -77,7 +78,7 @@ and open the template in the editor.
                                          oncomplete="$('.modal-editar-class').modal('hide')" />
                     </b:panel>
                 </b:container>
-            </b:modal>
+            
         </h:form>
         <h:form id="FormularioListadoLineaFactura">
             <b:container fluid="true">
@@ -115,6 +116,7 @@ and open the template in the editor.
                 </b:panel>
             </b:container>
         </h:form>
+        </b:modal>
     </ui:composition>
         
 </html>
