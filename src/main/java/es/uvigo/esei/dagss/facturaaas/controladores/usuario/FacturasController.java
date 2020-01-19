@@ -166,7 +166,16 @@ public class FacturasController implements Serializable {
     
     //No estoy seguro ---------------------------------------
     //Editar una linea de factura
-    public void doEditar(LineaDeFactura linea){
+    
+    public void doNuevaLinea() {
+        this.esNuevaLinea = true;
+        this.facturaActual = new Factura();
+        this.facturaActual.setPropietario(autenticacionController.getUsuarioLogueado());
+        //Forma de pago por defecto del usuario extraido de sus datos de facturacion
+        this.facturaActual.setFormaPago(
+                datosFacturacionDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado()).getFormaPagoPorDefecto());
+
+        this.facturaActual.setLineasDeFactura(new ArrayList<LineaDeFactura>()); //puse ArrayList por poner una implementacion de List con la que inicializar
         
     }
 }
