@@ -54,8 +54,23 @@ public class Factura implements Serializable{
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "factura")
     private List<LineaDeFactura> lineasDeFactura;
+    
+    public Factura(){
+    }
 
-            
+    public Factura(EstadoFactura estadoFactura, Cliente cliente, Usuario propietario, FormaPago formaPago, double importe, Date fechaEmision, String comentarios, String ejercicio, List<LineaDeFactura> lineasDeFactura) {
+        this.estadoFactura = estadoFactura;
+        this.cliente = cliente;
+        this.propietario = propietario;
+        this.formaPago = formaPago;
+        this.importe = importe;
+        this.fechaEmision = fechaEmision;
+        this.comentarios = comentarios;
+        this.ejercicio = ejercicio;
+        this.lineasDeFactura = lineasDeFactura;
+    }
+    
+    
     
     //GETTERS
     
