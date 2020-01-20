@@ -22,6 +22,8 @@ public class FacturaDAOJPA extends GenericoDAOJPA<Factura, Long> implements Fact
 
     @Override
     public List<Factura> buscarConPropietario(Usuario propietario) {
+        System.out.println("buscaPROP");
+        System.out.println("Propietario: " + propietario.getId());
         TypedQuery<Factura> query = em.createQuery("SELECT fac FROM Factura AS fac WHERE fac.propietario.id = :idPropietario", Factura.class);
         query.setParameter("idPropietario", propietario.getId());
         List<Factura> resultado = query.getResultList();
@@ -34,6 +36,9 @@ public class FacturaDAOJPA extends GenericoDAOJPA<Factura, Long> implements Fact
 
     @Override
     public List<Factura> buscarPorClienteConPropietario(Usuario propietario, Cliente cliente) {
+        System.out.println("buscaCLIENT");
+        System.out.println("Propietario: " + propietario.getId());
+        System.out.println("Cliente: " + cliente.getId());
         TypedQuery<Factura> query = em.createQuery("SELECT f FROM Factura AS f "+
                                                    "WHERE f.propietario.id = :idPropietario "+
                                                    "AND f.cliente.id = :idCliente ", Factura.class);

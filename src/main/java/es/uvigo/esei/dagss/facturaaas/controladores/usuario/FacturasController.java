@@ -136,23 +136,33 @@ public class FacturasController implements Serializable {
     
     @PostConstruct
     public void cargaInicial() {
+        System.out.println("Carga inicial");
         this.facturas = refrescarLista();
+        for(Factura f : facturas){
+            System.out.println("Factura_ID: " +f.getId() + " Cliente_ID: "+f.getCliente().getId()+" Comentarios: " +f.getComentarios());
+        }
         this.facturaActual = null;
         this.esNuevo = false;
+        System.out.println("fin carga inicial");
     }
 
     
     public void doBuscarConPropietario() {
+        System.out.println("Buscar con propietario");
         //this.facturas = dao.buscarConPropietario(autenticacionController.getUsuarioLogueado());
         this.facturas = refrescarLista();
     }
     
     public void doBuscarConPropietarioPorCliente() {
+        System.out.println("Buscar por Cliente");
         this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), clienteBusqueda);
     }
     
     public void doBuscarTodos() {
+        System.out.println("Buscar TODOS");
         this.facturas = refrescarLista();
+
+        System.out.println("fin busca todos");
     }
     
     //La forma de pago debe estar inicializada con la forma de pago por defecto del usuario actual
