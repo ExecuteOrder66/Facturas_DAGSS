@@ -109,14 +109,13 @@ and open the template in the editor.
                             <h:outputText value="#{lineaDeFactura.total}"/>
                         </b:dataTableColumn>
                     </b:dataTable>
+                    <b:commandButton id="botonNuevaLinea" icon-awesome="plus" value="Crear Linea de Factura" tooltip="Nueva Linea de factura" ajax="true"
+                                         actionListener="#{lineasDeFacturaController.doNuevo()}" 
+                                         update=":FormularioListadoLineaFactura"
+                                         oncomplete="$('.modal-editarLinea-class').modal('show')"/>
                 </b:panel>
             </b:container>
-            <f:facet name="footer">
-                <b:commandButton id="botonNuevaLinea" icon-awesome="plus" value="Crear Linea de Factura" tooltip="Nueva Linea de factura" ajax="true"
-                                         actionListener="#{lineasDeFacturaController.doNuevo()}" 
-                                         update=":formularioEditarLineaFactura"
-                                         oncomplete="$('.modal-editarLinea-class').modal('show')"/>
-                    </f:facet>
+           
             
         </h:form>
             
