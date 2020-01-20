@@ -21,13 +21,13 @@
                 <b:panel title="Listado de Facturas" collapsible="false" offset="1" span="9">
                     <b:panelGrid columns="4" col-spans="6,2,2,2">
                        <!-- <b:inputText value="<#//{clientesController.clienteBusqueda}" /> -->
-                        <b:selectOneMenu id="clienteListaBusqueda" converter="omnifaces.SelectItemsConverter"> 
+                       <b:selectOneMenu id="clienteListaBusqueda" converter="omnifaces.SelectItemsConverter" value="#{facturasController.clienteBusqueda}"> 
                             <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
                             <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
                                     itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
                         </b:selectOneMenu>
                         <b:commandButton value="Buscar por Cliente"  
-                                         actionListener="#{facturasController.doBuscarConPropietarioPorCliente(clienteFactura)}"
+                                         actionListener="#{facturasController.doBuscarConPropietarioPorCliente()}"
                                          update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal"/>
                         <b:commandButton value="Buscar Todos"  
                                          actionListener="#{facturasController.doBuscarTodos()}"

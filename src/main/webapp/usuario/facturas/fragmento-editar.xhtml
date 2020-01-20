@@ -34,7 +34,7 @@ and open the template in the editor.
                                 </b:selectOneMenu>
                             </h:panelGroup>
                             
-                            <!-- no estoy seguro de que funcione el datepicker -->
+                            
                             <h:panelGroup>
                                 <h:outputLabel value="Fecha emision" for="fechaEmision"/>
                                 <b:dateTimePicker id="datePicker" format="DD/MM/YYYY HH:mm" ajax="true" value="#{facturasController.facturaActual.fechaEmision}">    
@@ -43,9 +43,9 @@ and open the template in the editor.
                             
                             <h:panelGroup>
                                 <h:outputLabel value="Forma de Pago" for="formaPago"/>
-                                <b:selectOneMenu id="formaPago"  value="#{facturasController.facturaActual.formaPago}"
+                                <b:selectOneMenu id="formaPago"  value="#{facturasController.formaPago}"
                                                  converter="omnifaces.SelectItemsConverter">
-                                    <f:selectItems var="formaPagoFactura" value="#{facturaController.listadoFormaPago()}" 
+                                    <f:selectItems var="formaPagoFactura" value="#{facturasController.listadoFormasPago()}" 
                                                    itemValue="#{formaPagoFactura}" itemLabel="#{formaPagoFactura.nombre}"/>
                                 </b:selectOneMenu>
                             </h:panelGroup>

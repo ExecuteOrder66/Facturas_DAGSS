@@ -51,7 +51,9 @@ public class FacturasController implements Serializable {
     }
 
    
-    private Cliente clienteBusqueda;
+    private Cliente clienteBusqueda; //Para buscar facturas de un cliente en concreto
+
+
 
     private EstadoFactura[] estadosFactura = EstadoFactura.values();
    
@@ -107,6 +109,14 @@ public class FacturasController implements Serializable {
         return estadosFactura;
     }
     
+    public Cliente getClienteBusqueda() {
+        return clienteBusqueda;
+    }
+
+    public void setClienteBusqueda(Cliente clienteBusqueda) {
+        this.clienteBusqueda = clienteBusqueda;
+    }
+    
     public boolean isEsNuevo() {
         return esNuevo;
     }
@@ -137,8 +147,8 @@ public class FacturasController implements Serializable {
         this.facturas = refrescarLista();
     }
     
-    public void doBuscarConPropietarioPorCliente(Cliente cli) {
-        this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), cli);
+    public void doBuscarConPropietarioPorCliente() {
+        this.facturas = facturaDAO.buscarPorClienteConPropietario(autenticacionController.getUsuarioLogueado(), clienteBusqueda);
     }
     
     public void doBuscarTodos() {
@@ -167,7 +177,7 @@ public class FacturasController implements Serializable {
     public void doGuardarEditado() {
         if (this.esNuevo) {
             facturaActual.setCliente(clienteElegido);
-            //facturaActual.setFormaPago(formaPago);
+            facturaActual.setFormaPago(formaPago);
             facturaDAO.crear(facturaActual);
         } else {
             facturaDAO.actualizar(facturaActual);

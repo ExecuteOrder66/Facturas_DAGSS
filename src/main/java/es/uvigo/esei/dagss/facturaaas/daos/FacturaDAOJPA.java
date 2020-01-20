@@ -36,9 +36,9 @@ public class FacturaDAOJPA extends GenericoDAOJPA<Factura, Long> implements Fact
     public List<Factura> buscarPorClienteConPropietario(Usuario propietario, Cliente cliente) {
         TypedQuery<Factura> query = em.createQuery("SELECT f FROM Factura AS f "+
                                                    "WHERE f.propietario.id = :idPropietario "+
-                                                   "AND f.cliente.id =: idCliente ", Factura.class);
+                                                   "AND f.cliente.id = :idCliente ", Factura.class);
         query.setParameter("idPropietario", propietario.getId());
-        query.setParameter("idCliente", cliente.getId());        
+        query.setParameter("idCliente", cliente.getId());
         return query.getResultList();    
     }
     
