@@ -37,18 +37,12 @@ public class FacturasController implements Serializable {
     private Factura facturaActual;
     private boolean esNuevo;
     //No estoy seguro ---------------------------------------
-    private boolean esNuevaLinea;   //es lineaDeFactura nueva
+    //private boolean esNuevaLinea;   //es lineaDeFactura nueva
     private Cliente clienteElegido; //Para insertar el cliente (elegido en lista desplegable) vinculado a la factura
     private FormaPago formaPago;    //Para insertar la formaPago (elegido en lista desplegable) vinculada a la factura
     private DatosFacturacion datosFacturacion;
 
-    public DatosFacturacion getDatosFacturacion() {
-        return datosFacturacion;
-    }
 
-    public void setDatosFacturacion(DatosFacturacion datosFacturacion) {
-        this.datosFacturacion = datosFacturacion;
-    }
 
    
     private Cliente clienteBusqueda; //Para buscar facturas de un cliente en concreto
@@ -125,15 +119,14 @@ public class FacturasController implements Serializable {
         this.esNuevo = esNuevo;
     }
 
-    //No estoy seguro ---------------------------------------
-     public boolean isEsNuevaLinea() {
-        return esNuevaLinea;
+    public DatosFacturacion getDatosFacturacion() {
+        return datosFacturacion;
     }
 
-    public void setEsNuevaLinea(boolean esNuevaLinea) {
-        this.esNuevaLinea = esNuevaLinea;
+    public void setDatosFacturacion(DatosFacturacion datosFacturacion) {
+        this.datosFacturacion = datosFacturacion;
     }
-    
+
     @PostConstruct
     public void cargaInicial() {
         System.out.println("Carga inicial");

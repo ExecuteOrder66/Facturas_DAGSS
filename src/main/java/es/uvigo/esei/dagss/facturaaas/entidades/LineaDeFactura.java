@@ -43,7 +43,7 @@ public class LineaDeFactura{
     private TipoIVA tipoIva;
     
     private Double total;
-    
+
     @ManyToOne
     @JoinColumn(name = "CLIENTE_ID")
     private Cliente cliente;
@@ -105,6 +105,9 @@ public class LineaDeFactura{
         return total;
     }
 
+    public void setTotal(Double total) {
+        this.total = total;
+    }
     public Cliente getCliente() {
         return cliente;
     }

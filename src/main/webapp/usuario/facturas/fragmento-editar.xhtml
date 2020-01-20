@@ -111,7 +111,7 @@ and open the template in the editor.
                     </b:dataTable>
                     <b:commandButton id="botonNuevaLinea" icon-awesome="plus" value="Crear Linea de Factura" tooltip="Nueva Linea de factura" ajax="true"
                                          actionListener="#{lineasDeFacturaController.doNuevo()}" 
-                                         update=":FormularioListadoLineaFactura"
+                                         update="formularioEditarLineaFactura"
                                          oncomplete="$('.modal-editarLinea-class').modal('show')"/>
                 </b:panel>
             </b:container>
@@ -122,6 +122,8 @@ and open the template in the editor.
             
             
         </b:modal>
+        
+         <ui:include src="fragmento-editar-linea.xhtml"/>
     </ui:composition>
         
 </html>
