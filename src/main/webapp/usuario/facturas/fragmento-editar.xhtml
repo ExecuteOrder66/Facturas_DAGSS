@@ -43,10 +43,10 @@ and open the template in the editor.
                             
                             <h:panelGroup>
                                 <h:outputLabel value="Forma de Pago" for="formaPago"/>
-                                <b:selectOneMenu id="formaPago" 
+                                <b:selectOneMenu id="formaPago"  value="#{facturasController.facturaActual.formaPago}"
                                                  converter="omnifaces.SelectItemsConverter">
                                     <f:selectItems var="formaPagoFactura" value="#{facturaController.listadoFormaPago()}" 
-                                                   itemValue="#{formaPagoFactura}" itemLabel="#{formaPagoFactura.nombre}(#{formaPagoFactura.periodicidad})"/>
+                                                   itemValue="#{formaPagoFactura}" itemLabel="#{formaPagoFactura.nombre}"/>
                                 </b:selectOneMenu>
                             </h:panelGroup>
                             

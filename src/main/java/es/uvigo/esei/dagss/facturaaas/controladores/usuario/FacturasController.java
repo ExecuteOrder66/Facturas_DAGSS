@@ -11,6 +11,7 @@ import es.uvigo.esei.dagss.facturaaas.daos.DatosFacturacionDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.FacturaDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.FormaPagoDAO;
 import es.uvigo.esei.dagss.facturaaas.entidades.Cliente;
+import es.uvigo.esei.dagss.facturaaas.entidades.DatosFacturacion;
 import es.uvigo.esei.dagss.facturaaas.entidades.Direccion;
 import es.uvigo.esei.dagss.facturaaas.entidades.EstadoFactura;
 import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
@@ -37,14 +38,16 @@ public class FacturasController implements Serializable {
     private boolean esNuevo;
     //No estoy seguro ---------------------------------------
     private boolean esNuevaLinea;   //es lineaDeFactura nueva
-    private Cliente clienteElegido;
+    private Cliente clienteElegido; //Para insertar el cliente (elegido en lista desplegable) vinculado a la factura
+    private FormaPago formaPago;    //Para insertar la formaPago (elegido en lista desplegable) vinculada a la factura
+    private DatosFacturacion datosFacturacion;
 
-    public Cliente getClienteElegido() {
-        return clienteElegido;
+    public DatosFacturacion getDatosFacturacion() {
+        return datosFacturacion;
     }
 
-    public void setClienteElegido(Cliente clienteElegido) {
-        this.clienteElegido = clienteElegido;
+    public void setDatosFacturacion(DatosFacturacion datosFacturacion) {
+        this.datosFacturacion = datosFacturacion;
     }
 
    
@@ -65,7 +68,7 @@ public class FacturasController implements Serializable {
     private AutenticacionController autenticacionController;
 
     @Inject
-    private DatosFacturacionDAO datosFacturacionDAO;  //Para acceder al tipoIVA por defecto del usuario
+    private DatosFacturacionDAO datosFacturacionDAO;  //Para acceder a la formaPago por defecto del usuario
         
     public List<Factura> getFacturas() {
         return facturas;
@@ -83,6 +86,23 @@ public class FacturasController implements Serializable {
         this.facturaActual = facturaActual;
     }
 
+    
+    public FormaPago getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(FormaPago formaPago) {
+        this.formaPago = formaPago;
+    }
+
+    public Cliente getClienteElegido() {
+        return clienteElegido;
+    }
+
+    public void setClienteElegido(Cliente clienteElegido) {
+        this.clienteElegido = clienteElegido;
+    }
+    
     public EstadoFactura[] getEstadosFactura() {
         return estadosFactura;
     }
@@ -130,14 +150,14 @@ public class FacturasController implements Serializable {
         this.esNuevo = true;
         this.facturaActual = new Factura();
         this.facturaActual.setPropietario(autenticacionController.getUsuarioLogueado());
+        this.datosFacturacion= cargarDatosFacturacion();
         //Forma de pago por defecto del usuario extraido de sus datos de facturacion
-        this.facturaActual.setFormaPago(
-                datosFacturacionDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado()).getFormaPagoPorDefecto());
+        this.facturaActual.setFormaPago(datosFacturacion.getFormaPagoPorDefecto());
 
         this.facturaActual.setLineasDeFactura(new ArrayList<LineaDeFactura>()); //puse ArrayList por poner una implementacion de List con la que inicializar
         
     }
-
+    
     public void doEditar(Factura factura) {
         this.esNuevo = false;
         this.facturaActual = factura;
@@ -147,6 +167,7 @@ public class FacturasController implements Serializable {
     public void doGuardarEditado() {
         if (this.esNuevo) {
             facturaActual.setCliente(clienteElegido);
+            //facturaActual.setFormaPago(formaPago);
             facturaDAO.crear(facturaActual);
         } else {
             facturaDAO.actualizar(facturaActual);
@@ -170,13 +191,17 @@ public class FacturasController implements Serializable {
         return clienteDAO.buscarTodosConPropietario(autenticacionController.getUsuarioLogueado());
     }
     
-    public List<FormaPago> listadoFormaPago(){
+    public List<FormaPago> listadoFormasPago() {
         return formaPagoDAO.buscarActivas();
     }
     
+    private DatosFacturacion cargarDatosFacturacion(){
+        return datosFacturacionDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado());
+    }
     //No estoy seguro ---------------------------------------
     //Editar una linea de factura
     
+    /*
     public void doNuevaLinea() {
         this.esNuevaLinea = true;
         this.facturaActual = new Factura();
@@ -188,4 +213,5 @@ public class FacturasController implements Serializable {
         this.facturaActual.setLineasDeFactura(new ArrayList<LineaDeFactura>()); //puse ArrayList por poner una implementacion de List con la que inicializar
         
     }
+    */
 }
