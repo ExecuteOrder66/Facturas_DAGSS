@@ -37,6 +37,15 @@ public class FacturasController implements Serializable {
     private boolean esNuevo;
     //No estoy seguro ---------------------------------------
     private boolean esNuevaLinea;   //es lineaDeFactura nueva
+    private Cliente clienteElegido;
+
+    public Cliente getClienteElegido() {
+        return clienteElegido;
+    }
+
+    public void setClienteElegido(Cliente clienteElegido) {
+        this.clienteElegido = clienteElegido;
+    }
 
    
     private Cliente clienteBusqueda;
@@ -137,6 +146,7 @@ public class FacturasController implements Serializable {
 
     public void doGuardarEditado() {
         if (this.esNuevo) {
+            facturaActual.setCliente(clienteElegido);
             facturaDAO.crear(facturaActual);
         } else {
             facturaDAO.actualizar(facturaActual);

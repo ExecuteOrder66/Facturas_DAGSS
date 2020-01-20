@@ -19,19 +19,15 @@ and open the template in the editor.
                              rendered="#{not empty facturasController.facturaActual}" 
                              collapsible="false">
                         <b:panelGrid columns="2" col-spans="4,8">
-                            <h:panelGroup>
-                                <h:outputLabel value="Id" for="idFactura"/>                                    <!-- readonly pillado de stackoverflow, ver si funciona -->
-                                <b:inputText id="idFactura" value="#{facturasController.facturaActual.id}" required="true" readonly="#{facesContext.renderResponse}"/>
-                            </h:panelGroup>
                             
                             <h:panelGroup>
                                 <h:outputLabel value="Ejercicio" for="ejercicio"/>
-                                <b:inputText id="ejercicio" value=""/>
+                                <b:inputText id="ejercicio" value="#{facturasController.facturaActual.ejercicio}"/>
                             </h:panelGroup>
                             
                             <h:panelGroup>
                                 <h:outputLabel value="Cliente" for="clienteFactura"/>  
-                                <b:selectOneMenu id="clienteFactura" converter="omnifaces.SelectItemsConverter"> 
+                                <b:selectOneMenu id="clienteFactura" converter="omnifaces.SelectItemsConverter" value="#{facturasController.clienteElegido}"> 
                                 <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
                                 <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
                                                itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
@@ -69,12 +65,12 @@ and open the template in the editor.
                         </b:panelGrid> 
                         <b:commandButton value="Guardar Cambios" 
                                          ajax="true" process="@form" update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal " 
-                                         actionListener="#{clientesController.doGuardarEditado()}"  
+                                         actionListener="#{facturasController.doGuardarEditado()}"  
                                          oncomplete="$('.modal-editar-class').modal('hide')"/>
 
                         <b:commandButton value="Cancelar" immediate="true"
                                          ajax="true" process="@form" update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal " 
-                                         actionListener="#{clientesController.doCancelarEditado()}" 
+                                         actionListener="#{facturasController.doCancelarEditado()}" 
                                          oncomplete="$('.modal-editar-class').modal('hide')" />
                     </b:panel>
                 </b:container>

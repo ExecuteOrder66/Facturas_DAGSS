@@ -27,7 +27,7 @@
                                     itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
                         </b:selectOneMenu>
                         <b:commandButton value="Buscar por Cliente"  
-                                         actionListener="#{facturasController.doBuscarConPropietarioPorCliente()}"
+                                         actionListener="#{facturasController.doBuscarConPropietarioPorCliente(clienteFactura)}"
                                          update=":formularioListadoFactura:tablaListadoFactura :mensajesGlobal"/>
                         <b:commandButton value="Buscar Todos"  
                                          actionListener="#{facturasController.doBuscarTodos()}"
