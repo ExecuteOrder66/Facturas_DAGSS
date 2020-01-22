@@ -80,7 +80,7 @@ and open the template in the editor.
             <b:container fluid="true">
                 <b:panel title="Listado Lineas de Factura" collapsible="false" offset="1" span="9">
                     <b:dataTable id="tablaListadoLineaDeFactura"  class="tablaListadoClass"
-                                 value="#{facturaController.facturaActual.lineasDeFactura}"
+                                 value="#{facturasController.facturaActual.lineasDeFactura}"
                                  var="lineaDeFactura" 
                                  striped="true" 
                                  page-length="10" searching="false">
@@ -110,9 +110,12 @@ and open the template in the editor.
                         </b:dataTableColumn>
                     </b:dataTable>
                     <b:commandButton id="botonNuevaLinea" icon-awesome="plus" value="Crear Linea de Factura" tooltip="Nueva Linea de factura" ajax="true"
-                                         actionListener="#{lineasDeFacturaController.doNuevo()}" 
+                                     actionListener="#{facturasController.doNuevo()}" 
                                          update="formularioEditarLineaFactura"
-                                         oncomplete="$('.modal-editarLinea-class').modal('show')"/>
+                                         oncomplete="$('.modal-editarLinea-class').modal('show')">
+                       
+                    </b:commandButton>
+                        
                 </b:panel>
             </b:container>
            

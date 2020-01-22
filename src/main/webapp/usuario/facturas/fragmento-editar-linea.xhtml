@@ -16,12 +16,12 @@ and open the template in the editor.
             
                 <b:container fluid="true">
                     <b:panel title="Crear/Editar LineaDeFactura" 
-                             rendered="#{not empty lineasDeFacturaController.lineaActual}" 
+                             rendered="#{not empty facturasController.lineaActual}" 
                              collapsible="false">
                         <b:panelGrid columns="2" col-spans="4,8">
                             
                             <h:panelGroup>
-                                <h:outputLabel value="Id Factura: #{lineasDeFacturaController.factura.id}"/> <!--REVISAR Para mostrar el id en concreto-->
+                                <h:outputLabel value="Id Factura: #{facturasController.facturaActual.id}"/> <!--REVISAR Para mostrar el id en concreto-->
                             </h:panelGroup>
                             
                             <h:panelGroup>
@@ -36,9 +36,9 @@ and open the template in the editor.
                             
                             <h:panelGroup>
                                 <h:outputLabel value="TipoIva" for="tipoIva"/> <!--no estoy muy seguro de este desplegable-->
-                                <b:selectOneMenu id="tipoIva" value="#{lineasDeFacturaController.tipoIVA}" ajax="true" >   <!--cambiar value-->
+                                <b:selectOneMenu id="tipoIva" value="#{facturasController.tipoIVA}" ajax="true" >   <!--cambiar value-->
                                             <f:converter converterId="omnifaces.SelectItemsConverter" />
-                                            <f:selectItems var="tipoIVA" value="#{lineasDeFacturaController.listadoTipoIVA}"
+                                            <f:selectItems var="tipoIVA" value="#{facturasController.listadoTipoIVA()}"
                                                            itemValue="#{tipoIVA}" itemLabel="#{tipoIVA.nombre}(#{tipoIVA.porcentaje})"/><!-- cambiar value, anhadir itemValue e itemLabel-->
                                 </b:selectOneMenu>
                             </h:panelGroup>
@@ -62,12 +62,12 @@ and open the template in the editor.
                             
                         <b:commandButton value="Guardar Cambios" 
                                          ajax="true" process="@form" update=":formularioListadoLineaFactura:tablaListadoLineaDeFactura :mensajesGlobal " 
-                                         actionListener="#{lineasDeFacturaController.doGuardarEditado()}"  
+                                         actionListener="#{facturasController.doGuardarEditadoLinea()}"  
                                          oncomplete="$('.modal-editarLinea-class').modal('hide')"/>
 
                         <b:commandButton value="Cancelar" immediate="true"
                                          ajax="true" process="@form" update=":formularioListadoLineaFactura:tablaListadoLineaDeFactura :mensajesGlobal " 
-                                         actionListener="#{lineasDeFacturaController.doCancelarEditado()}" 
+                                         actionListener="#{facturasController.doCancelarEditadoLinea()}" 
                                          oncomplete="$('.modal-editarLinea-class').modal('hide')" />
                     </b:panel>
                 </b:container>

@@ -45,7 +45,7 @@
                             <h:outputText value="#{factura.id}"/>
                         </b:dataTableColumn>
 
-          
+                        
                         <b:dataTableColumn label="Cliente (nombre)">
                             <h:outputText value="#{factura.cliente.nombre}" />
                         </b:dataTableColumn>                    
@@ -58,8 +58,9 @@
                         
                         <b:dataTableColumn label="Forma de Pago">
                             <h:outputText value="#{factura.formaPago.nombre}, #{factura.formaPago.periodicidad} (#{factura.formaPago.numeroPagos})" />
-                        </b:dataTableColumn>                    
-
+                        </b:dataTableColumn>   
+                        
+                        
 
                         <b:dataTableColumn label="" orderable="false">
                             <b:commandButton id="botonEditar" icon-awesome="pencil" tooltip="Editar Factura" ajax="true" 

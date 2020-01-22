@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface LineaDeFacturaDAO extends GenericoDAO<LineaDeFactura, Long>{
     public List<LineaDeFactura> buscarConFactura(Factura factura);
-    
+    public void borrarLineaDeFactura(LineaDeFactura linea);
 }

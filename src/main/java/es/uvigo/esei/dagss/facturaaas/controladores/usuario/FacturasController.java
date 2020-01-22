@@ -10,6 +10,8 @@ import es.uvigo.esei.dagss.facturaaas.daos.ClienteDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.DatosFacturacionDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.FacturaDAO;
 import es.uvigo.esei.dagss.facturaaas.daos.FormaPagoDAO;
+import es.uvigo.esei.dagss.facturaaas.daos.LineaDeFacturaDAO;
+import es.uvigo.esei.dagss.facturaaas.daos.TipoIVADAO;
 import es.uvigo.esei.dagss.facturaaas.entidades.Cliente;
 import es.uvigo.esei.dagss.facturaaas.entidades.DatosFacturacion;
 import es.uvigo.esei.dagss.facturaaas.entidades.Direccion;
@@ -17,6 +19,7 @@ import es.uvigo.esei.dagss.facturaaas.entidades.EstadoFactura;
 import es.uvigo.esei.dagss.facturaaas.entidades.Factura;
 import es.uvigo.esei.dagss.facturaaas.entidades.FormaPago;
 import es.uvigo.esei.dagss.facturaaas.entidades.LineaDeFactura;
+import es.uvigo.esei.dagss.facturaaas.entidades.TipoIVA;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,23 +37,31 @@ import javax.inject.Named;
 public class FacturasController implements Serializable {
     
     private List<Factura> facturas;
+    private List<LineaDeFactura> lineasFacturaActual;
+
+
     private Factura facturaActual;
+    private LineaDeFactura lineaActual;
+    private TipoIVA tipoIVAPorDefecto;
+
+
     private boolean esNuevo;
-    //No estoy seguro ---------------------------------------
-    //private boolean esNuevaLinea;   //es lineaDeFactura nueva
+
+    private boolean esNuevaLinea;   //es lineaDeFactura nueva
     private Cliente clienteElegido; //Para insertar el cliente (elegido en lista desplegable) vinculado a la factura
     private FormaPago formaPago;    //Para insertar la formaPago (elegido en lista desplegable) vinculada a la factura
     private DatosFacturacion datosFacturacion;
-
-
-
-   
+  
     private Cliente clienteBusqueda; //Para buscar facturas de un cliente en concreto
-
-
 
     private EstadoFactura[] estadosFactura = EstadoFactura.values();
    
+    @Inject
+    private LineaDeFacturaDAO lineaDeFacturaDAO;
+    
+    @Inject
+    private TipoIVADAO tipoIVADAO;
+    
     @Inject
     private FacturaDAO facturaDAO;
 
@@ -74,6 +85,38 @@ public class FacturasController implements Serializable {
         this.facturas = facturas;
     }
 
+    public List<LineaDeFactura> getLineasFacturaActual() {
+        return lineasFacturaActual;
+    }
+
+    public void setLineasFacturaActual(List<LineaDeFactura> lineasFacturaActual) {
+        this.lineasFacturaActual = lineasFacturaActual;
+    }
+    
+    public boolean isEsNuevaLinea() {
+        return esNuevaLinea;
+    }
+
+    public void setEsNuevaLinea(boolean esNuevaLinea) {
+        this.esNuevaLinea = esNuevaLinea;
+    }
+    
+    public LineaDeFactura getLineaActual() {
+        return lineaActual;
+    }
+
+    public void setLineaActual(LineaDeFactura lineaActual) {
+        this.lineaActual = lineaActual;
+    }
+    
+    public TipoIVA getTipoIVAPorDefecto() {
+        return tipoIVAPorDefecto;
+    }
+
+    public void setTipoIVAPorDefecto(TipoIVA tipoIVAPorDefecto) {
+        this.tipoIVAPorDefecto = tipoIVAPorDefecto;
+    }
+    
     public Factura getFacturaActual() {
         return facturaActual;
     }
@@ -181,7 +224,7 @@ public class FacturasController implements Serializable {
         if (this.esNuevo) {
             facturaActual.setCliente(clienteElegido);
             facturaActual.setFormaPago(formaPago);
-            facturaDAO.crear(facturaActual);
+            facturaDAO.crear(facturaActual); 
         } else {
             facturaDAO.actualizar(facturaActual);
         }
@@ -208,23 +251,53 @@ public class FacturasController implements Serializable {
         return formaPagoDAO.buscarActivas();
     }
     
+    public List<TipoIVA> listadoTipoIVA(){
+        return this.tipoIVADAO.buscarActivos();
+    }
+    
     private DatosFacturacion cargarDatosFacturacion(){
         return datosFacturacionDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado());
     }
-    //No estoy seguro ---------------------------------------
-    //Editar una linea de factura
-    
-    /*
+
+    //Crear una linea de factura
     public void doNuevaLinea() {
         this.esNuevaLinea = true;
-        this.facturaActual = new Factura();
-        this.facturaActual.setPropietario(autenticacionController.getUsuarioLogueado());
-        //Forma de pago por defecto del usuario extraido de sus datos de facturacion
-        this.facturaActual.setFormaPago(
-                datosFacturacionDAO.buscarConPropietario(autenticacionController.getUsuarioLogueado()).getFormaPagoPorDefecto());
-
-        this.facturaActual.setLineasDeFactura(new ArrayList<LineaDeFactura>()); //puse ArrayList por poner una implementacion de List con la que inicializar
-        
+        this.lineaActual = new LineaDeFactura();
+        this.lineaActual.setFactura(facturaActual);
+        this.tipoIVAPorDefecto = datosFacturacion.getTipoIVAPorDefecto();
+        this.lineaActual.setTipoIva(tipoIVAPorDefecto);
+        this.lineaActual.setCliente(facturaActual.getCliente()); //------------------------------------REVISAR------------------------------
+   
     }
-    */
+    
+    public void doEditarLinea(LineaDeFactura lin){
+        this.esNuevaLinea = false;
+        this.lineaActual = lin;
+    }
+    
+    public void doGuardarEditadoLinea(){
+        if(this.esNuevaLinea){
+            lineaActual.setTipoIva(tipoIVAPorDefecto);
+            lineaDeFacturaDAO.crear(lineaActual);
+        }else{
+            lineaDeFacturaDAO.actualizar(lineaActual);
+        }
+        this.lineasFacturaActual = refrescarListadoLineas();
+        this.lineaActual=null;
+        this.esNuevaLinea=false;
+    }
+    
+    public void doCancelarEditadoLinea(){
+        this.lineaActual=null;
+        this.esNuevaLinea=false;
+    }
+    
+    //---------------------------------------------------------REVISAR--------------------------
+    public List<LineaDeFactura> doBuscarLineasDeFactura(){
+        return refrescarListadoLineas();
+    }
+    
+    private List<LineaDeFactura> refrescarListadoLineas(){
+        return lineaDeFacturaDAO.buscarConFactura(this.facturaActual);
+    }
 }

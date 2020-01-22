@@ -21,9 +21,10 @@ import javax.persistence.Table;
  *
  * @author danid
  */
-   @Entity
+@Entity
 @Table(name = "LINEAFACTURA")
 public class LineaDeFactura{
+
            
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,22 @@ public class LineaDeFactura{
     @JoinColumn(name = "CLIENTE_ID")
     private Cliente cliente;
 
+    public LineaDeFactura(){
+        
+    }
+    
+    public LineaDeFactura(Factura factura, String concepto, Double cantidad, Double precioUnitario, Double porcentajeDescuento, TipoIVA tipoIva, Double total, Cliente cliente) {
+
+        this.factura = factura;
+        this.concepto = concepto;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.porcentajeDescuento = porcentajeDescuento;
+        this.tipoIva = tipoIva;
+        this.total = total;
+        this.cliente = cliente;
+    }
+    
     public Factura getFactura() {
         return factura;
     }
