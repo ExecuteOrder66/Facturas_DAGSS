@@ -175,7 +175,9 @@ public class FacturasController implements Serializable {
         System.out.println("Carga inicial");
         this.facturas = refrescarLista();
         this.facturaActual = null;
+        this.lineaActual = null;
         this.esNuevo = false;
+        this.esNuevaLinea = false;
         System.out.println("fin carga inicial");
     }
 
@@ -300,11 +302,16 @@ public class FacturasController implements Serializable {
     }
     
     //---------------------------------------------------------REVISAR--------------------------
-    public List<LineaDeFactura> doBuscarLineasDeFactura(){
-        return refrescarListadoLineas();
+    public void doBuscarLineasDeFactura(){
+        this.lineasFacturaActual = refrescarListadoLineas();
     }
     
     private List<LineaDeFactura> refrescarListadoLineas(){
         return lineaDeFacturaDAO.buscarConFactura(this.facturaActual);
+    }
+    
+    public void doBorradoLinea(LineaDeFactura linea){
+        lineaDeFacturaDAO.borrarLineaDeFactura(linea);
+        this.lineasFacturaActual = refrescarListadoLineas();
     }
 }

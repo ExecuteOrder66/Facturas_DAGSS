@@ -29,6 +29,10 @@ public class LineaDeFacturaDAOJPA extends GenericoDAOJPA<LineaDeFactura, Long> i
             TypedQuery<LineaDeFactura> query = em.createQuery("SELECT lin FROM LineaDeFactura AS lin WHERE lin.factura.id = :idFactura", LineaDeFactura.class);
         query.setParameter("idFactura", factura.getId());
         List<LineaDeFactura> resultado = query.getResultList();
+        for(LineaDeFactura linea: resultado){
+            System.out.println("Linea_id: " +linea.getId()+" Concepto: "+linea.getConcepto());
+        }
+        System.out.println("al controlador");
         if ((resultado != null) && !resultado.isEmpty()) {
             return resultado;
         } else {
@@ -40,7 +44,7 @@ public class LineaDeFacturaDAOJPA extends GenericoDAOJPA<LineaDeFactura, Long> i
     public void borrarLineaDeFactura(LineaDeFactura linea) {
         Long aux = linea.getId();
         System.out.println("Borrar lineas de factura");
-        TypedQuery<LineaDeFactura> query = em.createQuery("DELETE lin FROM LineaDeFactura as lin WHERE lin.id = :idLin", LineaDeFactura.class);
+        TypedQuery<LineaDeFactura> query = em.createQuery("DELETE FROM LineaDeFactura as lin WHERE lin.id = :idLin", LineaDeFactura.class);
         query.setParameter("idLin", linea.getId());
         int numResult = query.executeUpdate();
         if(numResult==1){
