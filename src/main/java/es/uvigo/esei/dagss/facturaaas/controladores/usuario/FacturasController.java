@@ -42,7 +42,7 @@ public class FacturasController implements Serializable {
 
     private Factura facturaActual;
     private LineaDeFactura lineaActual;
-    private TipoIVA tipoIVAPorDefecto;
+    private TipoIVA tipoIVA;
 
 
     private boolean esNuevo;
@@ -109,12 +109,12 @@ public class FacturasController implements Serializable {
         this.lineaActual = lineaActual;
     }
     
-    public TipoIVA getTipoIVAPorDefecto() {
-        return tipoIVAPorDefecto;
+    public TipoIVA getTipoIVA() {
+        return tipoIVA;
     }
 
-    public void setTipoIVAPorDefecto(TipoIVA tipoIVAPorDefecto) {
-        this.tipoIVAPorDefecto = tipoIVAPorDefecto;
+    public void setTipoIVA(TipoIVA tipoIVA) {
+        this.tipoIVA = tipoIVA;
     }
     
     public Factura getFacturaActual() {
@@ -174,9 +174,6 @@ public class FacturasController implements Serializable {
     public void cargaInicial() {
         System.out.println("Carga inicial");
         this.facturas = refrescarLista();
-        for(Factura f : facturas){
-            System.out.println("Factura_ID: " +f.getId() + " Cliente_ID: "+f.getCliente().getId()+" Comentarios: " +f.getComentarios());
-        }
         this.facturaActual = null;
         this.esNuevo = false;
         System.out.println("fin carga inicial");
@@ -264,8 +261,12 @@ public class FacturasController implements Serializable {
         this.esNuevaLinea = true;
         this.lineaActual = new LineaDeFactura();
         this.lineaActual.setFactura(facturaActual);
-        this.tipoIVAPorDefecto = datosFacturacion.getTipoIVAPorDefecto();
-        this.lineaActual.setTipoIva(tipoIVAPorDefecto);
+        this.datosFacturacion = cargarDatosFacturacion();
+        this.tipoIVA = datosFacturacion.getTipoIVAPorDefecto();
+        this.lineaActual.setTipoIva(tipoIVA);
+        this.lineaActual.setCantidad(1);
+        this.lineaActual.setPrecioUnitario(1);
+        this.lineaActual.setPorcentajeDescuento(0);
         this.lineaActual.setCliente(facturaActual.getCliente()); //------------------------------------REVISAR------------------------------
    
     }
@@ -276,8 +277,14 @@ public class FacturasController implements Serializable {
     }
     
     public void doGuardarEditadoLinea(){
+        //Se calcula el total como: cantidad * precioUnitario * (1+IVA) * (1-Descuento)
+        lineaActual.setTotal(
+                (lineaActual.getCantidad()*lineaActual.getPrecioUnitario()) 
+                        * ( 1+(tipoIVA.getPorcentaje()/100) )
+                        * ( 1-(lineaActual.getPorcentajeDescuento()/100) )
+            );  
         if(this.esNuevaLinea){
-            lineaActual.setTipoIva(tipoIVAPorDefecto);
+            lineaActual.setTipoIva(tipoIVA);
             lineaDeFacturaDAO.crear(lineaActual);
         }else{
             lineaDeFacturaDAO.actualizar(lineaActual);

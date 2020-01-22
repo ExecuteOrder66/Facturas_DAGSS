@@ -12,35 +12,35 @@ and open the template in the editor.
       xmlns:b="http://bootsfaces.net/ui">
     <ui:composition>
         <b:modal id="modalEditarFactura" class="modal-editar-class" title="Crear/Editar Factura">
-        <h:form id="formularioEditarFactura">
-            
+            <h:form id="formularioEditarFactura">
+
                 <b:container fluid="true">
                     <b:panel title="Crear/Editar Factura" 
                              rendered="#{not empty facturasController.facturaActual}" 
                              collapsible="false">
                         <b:panelGrid columns="2" col-spans="4,8">
-                            
+
                             <h:panelGroup>
                                 <h:outputLabel value="Ejercicio" for="ejercicio"/>
                                 <b:inputText id="ejercicio" value="#{facturasController.facturaActual.ejercicio}"/>
                             </h:panelGroup>
-                            
+
                             <h:panelGroup>
                                 <h:outputLabel value="Cliente" for="clienteFactura"/>  
                                 <b:selectOneMenu id="clienteFactura" converter="omnifaces.SelectItemsConverter" value="#{facturasController.clienteElegido}"> 
-                                <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
-                                <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
-                                               itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
+                                    <!-- NO estoy seguro de que la lista asi este bien, inspirada en los desplegables de pagos/perfil.xhtml-->
+                                    <f:selectItems var="clienteFactura" value="#{facturasController.listadoClientes()}" itemValue="#{clienteFactura}" 
+                                                   itemLabel="#{clienteFactura.nombre}(#{clienteFactura.nif})"/> 
                                 </b:selectOneMenu>
                             </h:panelGroup>
-                            
-                            
+
+
                             <h:panelGroup>
                                 <h:outputLabel value="Fecha emision" for="fechaEmision"/>
                                 <b:dateTimePicker id="fechaEmision" format="DD/MM/YYYY HH:mm" ajax="true" value="#{facturasController.facturaActual.fechaEmision}">    
                                 </b:dateTimePicker>
                             </h:panelGroup>           
-                            
+
                             <h:panelGroup>
                                 <h:outputLabel value="Forma de Pago" for="formaPago"/>
                                 <b:selectOneMenu id="formaPago"  value="#{facturasController.formaPago}"
@@ -49,15 +49,15 @@ and open the template in the editor.
                                                    itemValue="#{formaPagoFactura}" itemLabel="#{formaPagoFactura.nombre}"/>
                                 </b:selectOneMenu>
                             </h:panelGroup>
-                            
+
                             <h:panelGroup>
                                 <h:outputLabel value="Estado" for="estadoFactura"/> <!--no estoy muy seguro de este desplegable-->
                                 <b:selectOneMenu id="estadoFactura" value="#{facturasController.facturaActual.estadoFactura}" ajax="true" >
-                                            <f:converter converterId="omnifaces.GenericEnumConverter" />
-                                            <f:selectItems value="#{facturasController.estadosFactura}"/>
+                                    <f:converter converterId="omnifaces.GenericEnumConverter" />
+                                    <f:selectItems value="#{facturasController.estadosFactura}"/>
                                 </b:selectOneMenu>
                             </h:panelGroup>
-                            
+
                             <h:panelGroup>
                                 <h:outputLabel value="Comentarios" for="comentarios"/>                                    
                                 <b:inputText id="comentarios" value="#{facturasController.facturaActual.comentarios}" />    
@@ -74,59 +74,11 @@ and open the template in the editor.
                                          oncomplete="$('.modal-editar-class').modal('hide')" />
                     </b:panel>
                 </b:container>
-            
-        </h:form>
-        <h:form id="FormularioListadoLineaFactura">
-            <b:container fluid="true">
-                <b:panel title="Listado Lineas de Factura" collapsible="false" offset="1" span="9">
-                    <b:dataTable id="tablaListadoLineaDeFactura"  class="tablaListadoClass"
-                                 value="#{facturasController.facturaActual.lineasDeFactura}"
-                                 var="lineaDeFactura" 
-                                 striped="true" 
-                                 page-length="10" searching="false">
-                        
-                        <b:dataTableColumn label="Id">
-                            <h:outputText value="#{lineaDeFactura.id}"/>
-                        </b:dataTableColumn>
-                        
-                        <b:dataTableColumn label="Concepto">
-                            <h:outputText value="#{lineaDeFactura.concepto}"/>
-                        </b:dataTableColumn>
-                        
-                        <b:dataTableColumn label="Cantidad">
-                            <h:outputText value="#{lineaDeFactura.cantidad}"/>
-                        </b:dataTableColumn>
-                        
-                        <b:dataTableColumn label="Precio unitario">
-                            <h:outputText value="#{lineaDeFactura.precioUnitario}"/>
-                        </b:dataTableColumn>
-                        
-                        <b:dataTableColumn label="Tipo IVA">
-                            <h:outputText value="#{lineaDeFactura.tipoIva.nombre}(#{lineaDeFactura.tipoIva.porcentaje})"/>
-                        </b:dataTableColumn>
-                        
-                        <b:dataTableColumn label="Total">
-                            <h:outputText value="#{lineaDeFactura.total}"/>
-                        </b:dataTableColumn>
-                    </b:dataTable>
-                    <b:commandButton id="botonNuevaLinea" icon-awesome="plus" value="Crear Linea de Factura" tooltip="Nueva Linea de factura" ajax="true"
-                                     actionListener="#{facturasController.doNuevo()}" 
-                                         update="formularioEditarLineaFactura"
-                                         oncomplete="$('.modal-editarLinea-class').modal('show')">
-                       
-                    </b:commandButton>
-                        
-                </b:panel>
-            </b:container>
-           
-            
-        </h:form>
-            
-            
-            
+
+            </h:form>
         </b:modal>
-        
-         <ui:include src="fragmento-editar-linea.xhtml"/>
+
+
     </ui:composition>
-        
+
 </html>
